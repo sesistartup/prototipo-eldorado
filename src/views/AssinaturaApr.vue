@@ -47,10 +47,15 @@ import { onMounted } from 'vue';
   let signaturePad
   const emitirApr = async () => {
     if (!signaturePad.isEmpty()) {
-      const data = signaturePad.toData()
-      await fetch('http://localhost:3000/emitir-apr', {
+      const signatureData = signaturePad.toData()
+      const email = sessionStorage.getItem('email')
+      const payload = {
+        signatureData: signatureData,
+        email: email
+      }
+      await fetch('http://localhost:3000/apr', {
         method: 'POST',
-        body: JSON.stringify(data), // enviar email do usuário logado
+        body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
         },

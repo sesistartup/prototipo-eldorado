@@ -43,7 +43,7 @@ export default {
       const registration = await navigator.serviceWorker.getRegistration('service-worker.js')
       if (registration) {
         const subscription = await registration.pushManager.getSubscription()
-        await fetch('http://localhost:3000/emitir-apr', {
+        await fetch('http://localhost:3000/apr', {
           method: 'POST',
           body: JSON.stringify(subscription),
           headers: {
@@ -51,7 +51,7 @@ export default {
           },
         });
       } else {
-        await fetch('http://localhost:3000/emitir-apr', {
+        await fetch('http://localhost:3000/apr', {
           method: 'POST',
           body: JSON.stringify(await this.subscribeNotification()),
           headers: {
@@ -62,13 +62,18 @@ export default {
 
     },
     async handleLoginRequest(body) {
-      await fetch('http://localhost:3000/logar', {
+      const response = await fetch('http://localhost:3000/user/login', {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      if (response.status > 199 || response.status < 300) {
+        const data = await response.json()
+        console.log(data)
+        sessionStorage.setItem('email', data.email)
+      }
     },
     async logUserIn(email, pass) {
       const registration = await navigator.serviceWorker.getRegistration('service-worker.js')
@@ -106,15 +111,12 @@ export default {
       return outputArray;
     }
   },
-  async mounted() {
+  mounted() {
     if ('Notification' in window) {
-      if (Notification.permission === 'granted') {
-        await this.postSubscribe()
-      } else if (Notification.permission !== 'denied') {
-        const permission = await Notification.requestPermission()
-        if (permission === 'granted') {
-          await this.postSubscribe()
-        }
+      if (Notification.permission === 'default') {
+        Notification.requestPermission()
+      } else if (Notification.permission === 'denied') {
+        alert('Por favor, permita o envio de notificações')
       }
     }
 
