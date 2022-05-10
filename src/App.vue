@@ -2,7 +2,10 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-    <button @click="postSubscribe()">opa</button>
+    <button @click="$router.push({ name: 'assinatura-apr'})">Emitir Apr</button>
+    <input type="text" name="email" id="email" placeholder="email" v-model="login.email">
+    <input type="password" name="password" id="password" placeholder="password" v-model="login.pass">
+    <button @click="logUserIn(login.email, login.pass)">logar</button>
   </nav>
   <router-view />
 </template>
@@ -11,6 +14,10 @@
 export default {
   data() {
     return {
+      login: {
+        email: '',
+        pass: ''
+      },
       publicVapidKey: 'BKRryA-vwbeL94bRKnqB6to7G0yMecNePXYLq0IsOoun1jdI8SW2MqXJ7IQcCJDnn3B1RQaxqzdkNftxU-WFIZY'
     }
   },
@@ -18,9 +25,7 @@ export default {
     async registerServiceWorker() {
       if ('serviceWorker' in navigator) {
         const registrations = await navigator.serviceWorker.getRegistrations() //TODO: remove unregister when ready to deplyo
-        registrations.forEach((registration) => {
-          registration.unregister()
-        })
+        if (registrations[0]) return registrations[0]
         const registration = await navigator.serviceWorker.register('service-worker.js')
         return registration
       }
@@ -38,7 +43,7 @@ export default {
       const registration = await navigator.serviceWorker.getRegistration('service-worker.js')
       if (registration) {
         const subscription = await registration.pushManager.getSubscription()
-        await fetch('http://localhost:3000/subscribe', {
+        await fetch('http://localhost:3000/emitir-apr', {
           method: 'POST',
           body: JSON.stringify(subscription),
           headers: {
@@ -46,13 +51,43 @@ export default {
           },
         });
       } else {
-        await fetch('http://localhost:3000/subscribe', {
+        await fetch('http://localhost:3000/emitir-apr', {
           method: 'POST',
           body: JSON.stringify(await this.subscribeNotification()),
           headers: {
             'Content-Type': 'application/json',
           },
         });
+      }
+
+    },
+    async handleLoginRequest(body) {
+      await fetch('http://localhost:3000/logar', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    },
+    async logUserIn(email, pass) {
+      const registration = await navigator.serviceWorker.getRegistration('service-worker.js')
+
+      if (registration) {
+        const subscription = await registration.pushManager.getSubscription()
+        const login = {
+          email: email,
+          pass: pass,
+          subscription: subscription
+        }
+        await this.handleLoginRequest(login)
+      } else {
+        const login = {
+          email: email,
+          pass: pass,
+          subscription: await this.subscribeNotification()
+        }
+        await this.handleLoginRequest(login)
       }
 
     },

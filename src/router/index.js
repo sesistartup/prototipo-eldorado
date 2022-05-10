@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import AssinaturaApr from '@/views/AssinaturaApr.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/assinatura-apr',
+    name: 'assinatura-apr',
+    component: AssinaturaApr
   },
   {
     path: '/about',
