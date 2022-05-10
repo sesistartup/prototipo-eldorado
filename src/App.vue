@@ -43,7 +43,7 @@ export default {
       const registration = await navigator.serviceWorker.getRegistration('service-worker.js')
       if (registration) {
         const subscription = await registration.pushManager.getSubscription()
-        await fetch('http://localhost:3000/apr', {
+        await fetch('https://twelve-flies-decide-201-67-41-116.loca.lt/apr', {
           method: 'POST',
           body: JSON.stringify(subscription),
           headers: {
@@ -51,7 +51,7 @@ export default {
           },
         });
       } else {
-        await fetch('http://localhost:3000/apr', {
+        await fetch('https://twelve-flies-decide-201-67-41-116.loca.lt/apr', {
           method: 'POST',
           body: JSON.stringify(await this.subscribeNotification()),
           headers: {
@@ -62,7 +62,7 @@ export default {
 
     },
     async handleLoginRequest(body) {
-      const response = await fetch('http://localhost:3000/user/login', {
+      const response = await fetch('https://twelve-flies-decide-201-67-41-116.loca.lt/user/login', {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {

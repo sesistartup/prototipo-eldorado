@@ -53,7 +53,7 @@ import { onMounted } from 'vue';
         signatureData: signatureData,
         email: email
       }
-      await fetch('http://localhost:3000/apr', {
+      await fetch('https://twelve-flies-decide-201-67-41-116.loca.lt/apr', {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
