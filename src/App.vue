@@ -5,7 +5,7 @@
     <button @click="$router.push({ name: 'assinatura-apr'})">Emitir Apr</button>
     <input type="text" name="email" id="email" placeholder="email" v-model="login.email">
     <input type="password" name="password" id="password" placeholder="password" v-model="login.pass">
-    <button @click="logUserIn(login.email, login.pass)">Logarrrrr</button>
+    <button @click="logUserIn(login.email, login.pass)">Loooogar</button>
   </nav>
   <router-view />
 </template>
@@ -72,7 +72,7 @@ export default {
         });
         const nav = document.querySelector('nav')
         const div = document.createElement('div')
-        div.textContent = JSON.stringify(response)
+        div.textContent = response
         nav.appendChild(div)
         if (response.status > 199 || response.status < 300) {
           nav.appendChild('antes do response.json()')
