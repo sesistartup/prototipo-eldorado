@@ -75,7 +75,9 @@ export default {
         div.textContent = JSON.stringify(response)
         nav.appendChild(div)
         if (response.status > 199 || response.status < 300) {
+          nav.appendChild('antes do response.json()')
           const data = await response.json()
+          nav.appendChild('depois do response.json()')
           sessionStorage.setItem('email', data.email)
         }
       } catch (error) {
