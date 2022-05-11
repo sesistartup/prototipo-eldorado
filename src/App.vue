@@ -72,6 +72,7 @@ export default {
           body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json',
+            'Bypass-Tunnel-Reminder': 'Hi tunnel'
           },
         });
         const nav = document.querySelector('nav')
