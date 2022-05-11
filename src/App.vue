@@ -5,7 +5,7 @@
     <button @click="$router.push({ name: 'assinatura-apr'})">Emitir Apr</button>
     <input type="text" name="email" id="email" placeholder="email" v-model="login.email">
     <input type="password" name="password" id="password" placeholder="password" v-model="login.pass">
-    <button @click="logUserIn(login.email, login.pass)">logar</button>
+    <button @click="logUserIn(login.email, login.pass)">Logarrrrr</button>
   </nav>
   <router-view />
 </template>
@@ -62,17 +62,24 @@ export default {
 
     },
     async handleLoginRequest(body) {
-      const response = await fetch('https://demo-eldorado.loca.lt/user/login', {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (response.status > 199 || response.status < 300) {
-        const data = await response.json()
-        console.log(data)
-        sessionStorage.setItem('email', data.email)
+      try {
+        const response = await fetch('https://demo-eldorado.loca.lt/user/login', {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const nav = document.querySelector('nav')
+        const div = document.createElement('div')
+        div.textContent = JSON.stringify(response)
+        nav.appendChild(div)
+        if (response.status > 199 || response.status < 300) {
+          const data = await response.json()
+          sessionStorage.setItem('email', data.email)
+        }
+      } catch (error) {
+        alert(error)
       }
     },
     async logUserIn(email, pass) {
