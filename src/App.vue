@@ -5,7 +5,7 @@
     <button @click="$router.push({ name: 'assinatura-apr'})">Emitir Apr</button>
     <input type="text" name="email" id="email" placeholder="email" v-model="login.email">
     <input type="password" name="password" id="password" placeholder="password" v-model="login.pass">
-    <button @click="logUserIn(login.email, login.pass)">Loooogar</button>
+    <button @click="logUserIn(login.email, login.pass)">Loga mobile por favor</button>
   </nav>
   <router-view />
 </template>
@@ -24,10 +24,14 @@ export default {
   methods: {
     async registerServiceWorker() {
       if ('serviceWorker' in navigator) {
-        const registrations = await navigator.serviceWorker.getRegistrations() //TODO: remove unregister when ready to deplyo
-        if (registrations[0]) return registrations[0]
-        const registration = await navigator.serviceWorker.register('service-worker.js')
-        return registration
+        try {
+          const registrations = await navigator.serviceWorker.getRegistrations() //TODO: remove unregister when ready to deplyo
+          if (registrations[0]) return registrations[0]
+          const registration = await navigator.serviceWorker.register('service-worker.js')
+          return registration
+        } catch (error) {
+          alert(error)
+        }
       }
     },
     async subscribeNotification() {
@@ -72,12 +76,14 @@ export default {
         });
         const nav = document.querySelector('nav')
         const div = document.createElement('div')
-        div.textContent = response
+        div.textContent = response.status
         nav.appendChild(div)
-        if (response.status > 199 || response.status < 300) {
-          nav.appendChild('antes do response.json()')
+        if (response.status > 199 && response.status < 300) {
+          const outraDiv = document.createElement('div')
+          outraDiv.textContent = 'antes do response.json()'
+          nav.appendChild(outraDiv)
           const data = await response.json()
-          nav.appendChild('depois do response.json()')
+          outraDiv.textContent = outraDiv.textContent + ' Passou pelo response.json()'
           sessionStorage.setItem('email', data.email)
         }
       } catch (error) {
