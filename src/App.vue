@@ -52,6 +52,7 @@ export default {
           body: JSON.stringify(subscription),
           headers: {
             'Content-Type': 'application/json',
+            'Bypass-Tunnel-Reminder': 'Hi tunnel'
           },
         });
       } else {
@@ -60,6 +61,7 @@ export default {
           body: JSON.stringify(await this.subscribeNotification()),
           headers: {
             'Content-Type': 'application/json',
+            'Bypass-Tunnel-Reminder': 'Hi tunnel'
           },
         });
       }
@@ -75,17 +77,11 @@ export default {
             'Bypass-Tunnel-Reminder': 'Hi tunnel'
           },
         });
-        const nav = document.querySelector('nav')
-        const div = document.createElement('div')
-        div.textContent = response.status + await response.text()
-        nav.appendChild(div)
         if (response.status > 199 && response.status < 300) {
-          const outraDiv = document.createElement('div')
-          outraDiv.textContent = 'antes do response.json()'
-          nav.appendChild(outraDiv)
           const data = await response.json()
-          outraDiv.textContent = outraDiv.textContent + ' Passou pelo response.json()'
           sessionStorage.setItem('email', data.email)
+        } else if (response.status === 404) {
+          this.notifyFailedLogin()
         }
       } catch (error) {
         alert(error)
@@ -125,6 +121,15 @@ export default {
         outputArray[i] = rawData.charCodeAt(i);
       }
       return outputArray;
+    },
+    notifyFailedLogin() {
+      const failedCredentials = document.createElement('span')
+      failedCredentials.textContent = 'E-mail ou senha inválidos'
+      const nav = document.querySelector('nav')
+      nav.appendChild(failedCredentials)
+      setTimeout(() => {
+        nav.removeChild(failedCredentials)
+      }, 4000)
     }
   },
   mounted() {

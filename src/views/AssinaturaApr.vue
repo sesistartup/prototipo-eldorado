@@ -58,6 +58,7 @@ import { onMounted } from 'vue';
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
+          'Bypass-Tunnel-Reminder': 'Hi tunnel'
         },
       });
     } else {
