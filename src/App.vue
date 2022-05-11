@@ -76,7 +76,7 @@ export default {
         });
         const nav = document.querySelector('nav')
         const div = document.createElement('div')
-        div.textContent = response.status
+        div.textContent = response.status + await response.text()
         nav.appendChild(div)
         if (response.status > 199 && response.status < 300) {
           const outraDiv = document.createElement('div')
