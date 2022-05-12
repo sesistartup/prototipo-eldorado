@@ -8,4 +8,7 @@
   .std-input-field {
     @apply border-solid rounded-2xl border-gray-400 border-2 px-4 my-2;
   }
+  .std-button-positive-action {
+    @apply border-solid rounded-2xl border-2 border-green-600 px-4 h-10 leading-10 hover:bg-green-600 hover:text-white hover:drop-shadow-lg
+  }
 }

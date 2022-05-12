@@ -1,12 +1,19 @@
 <template>
-  <div class="flex flex-col items-center bg-white w-5/6 m-auto rounded-md border-green-600 border-2 p-4 drop-shadow-2xl">
-    <img alt="Vue logo" src="../assets/eldorado-logo.png">
-    <button @click="$router.push({ name: 'assinatura-apr' })">Emitir Apr</button>
-    <input class="std-input-field" type="text" name="email" id="email" placeholder="email" v-model="login.email">
-    <input class="std-input-field" type="password" name="password"
+  <section class="flex flex-col items-center bg-white w-5/6 sm:w-[500px] m-auto rounded-md border-green-600 border-2 p-4 drop-shadow-2xl">
+    <header>
+      <img alt="Eldorado logo" src="../assets/eldorado-logo.png" class="w-24">
+    </header>
+    <main class="flex flex-col sm:w-4/6 w-5/6 relative">
+      <!-- <button @click="$router.push({ name: 'assinatura-apr' })">Emitir Apr</button> -->
+      <input class="std-input-field focus:outline-none focus:border-transparent focus:ring focus:ring-lime-200 hover:border-green-400" type="text" name="email" id="email" placeholder="email" v-model="login.email">
+      <input class="std-input-field focus:outline-none focus:border-transparent focus:ring focus:ring-lime-200 hover:border-green-400" type="password" name="password"
       id="password" placeholder="password" v-model="login.pass">
-    <button class="border-solid rounded-2xl border-green-600 border-2 px-4" @click="logUserIn(login.email, login.pass)">Entrar</button>
-  </div>
+    </main>
+    <footer class="h-8 mt-3 flex flex-col justify-center">
+      <button v-if="!templateControllers.isAwaitingLoginResponse" class="std-button-positive-action" @click="logUserIn(login.email, login.pass)">Entrar</button>
+      <div v-else class="w-[30px] h-[4px] bg-green-600 animate-spin"/>
+    </footer>
+  </section>
 </template>
 
 <script>
@@ -17,6 +24,9 @@ export default {
       login: {
         email: "",
         pass: ""
+      },
+      templateControllers: {
+        isAwaitingLoginResponse: false
       },
       publicVapidKey: "BKRryA-vwbeL94bRKnqB6to7G0yMecNePXYLq0IsOoun1jdI8SW2MqXJ7IQcCJDnn3B1RQaxqzdkNftxU-WFIZY"
     };
@@ -82,6 +92,7 @@ export default {
         if (response.status > 199 && response.status < 300) {
           const data = await response.json();
           sessionStorage.setItem("email", data.email);
+          this.$router.push({ name: 'home-view'})
         }
         else if (response.status === 404) {
           this.notifyFailedLogin();
@@ -92,6 +103,7 @@ export default {
       }
     },
     async logUserIn(email, pass) {
+      this.templateControllers.isAwaitingLoginResponse = true
       const registration = await navigator.serviceWorker.getRegistration("service-worker.js");
       if (registration) {
         const subscription = await registration.pushManager.getSubscription();
@@ -110,6 +122,7 @@ export default {
         };
         await this.handleLoginRequest(login);
       }
+      this.templateControllers.isAwaitingLoginResponse = false
     },
     urlBase64ToUint8Array(base64String) {
       const padding = "=".repeat((4 - base64String.length % 4) % 4);
@@ -126,11 +139,15 @@ export default {
     notifyFailedLogin() {
       const failedCredentials = document.createElement("span");
       failedCredentials.textContent = "E-mail ou senha inválidos";
-      const nav = document.querySelector("nav");
+      failedCredentials.classList.add('text-red-600')
+      failedCredentials.classList.add('absolute')
+      failedCredentials.classList.add('bottom-[-15px]')
+      failedCredentials.classList.add('left-1/4')
+      const nav = document.querySelector("main");
       nav.appendChild(failedCredentials);
-      setTimeout(() => {
-        nav.removeChild(failedCredentials);
-      }, 4000);
+      // setTimeout(() => {
+      //   nav.removeChild(failedCredentials);
+      // }, 4000);
     }
   },
   mounted() {

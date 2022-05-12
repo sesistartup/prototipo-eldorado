@@ -1,12 +1,12 @@
 <template>
-  <nav>
+  <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-    <!-- <button @click="$router.push({ name: 'assinatura-apr'})">Emitir Apr</button>
+    <button @click="$router.push({ name: 'assinatura-apr'})">Emitir Apr</button>
     <input type="text" name="email" id="email" placeholder="email" v-model="login.email">
     <input type="password" name="password" id="password" placeholder="password" v-model="login.pass">
-    <button @click="logUserIn(login.email, login.pass)">Loga mobile por favor</button> -->
-  </nav>
+    <button @click="logUserIn(login.email, login.pass)">Loga mobile por favor</button>
+  </nav> -->
   <router-view />
 </template>
 
@@ -18,6 +18,9 @@
   text-align: center;
   color: #2c3e50;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
   /* background-color: #34b64f; */
 }
 

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/Login.vue'
 import AssinaturaApr from '@/views/AssinaturaApr.vue'
+import HomeView from '@/views/Home.vue'
+import AprForm from '@/views/AprForm.vue'
 
 const routes = [
   {
@@ -14,14 +16,14 @@ const routes = [
     component: AssinaturaApr
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    }
+    path: '/home',
+    name: 'home-view',
+    component: HomeView
+  },
+  {
+    path: '/apr',
+    name: 'apr',
+    component: AprForm
   }
 ]
 
