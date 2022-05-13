@@ -8,8 +8,17 @@
   .std-input-field {
     @apply border-solid rounded-2xl border-gray-400 border-2 px-4 my-2;
   }
-  .std-button-positive-action {
-    @apply border-solid rounded-2xl border-2 border-green-600 px-4 h-10 leading-10 hover:bg-green-600 hover:text-white hover:drop-shadow-lg
+  .std-button {
+    @apply border-solid rounded-2xl border-2 px-4 h-10 leading-10
+  }
+  .button-positive-action {
+    @apply border-green-600 hover:bg-green-600 hover:text-white hover:drop-shadow-lg
+  }
+  .button-neutral-action {
+    @apply border-blue-600 hover:bg-blue-600 hover:text-white hover:drop-shadow-lg
+  }
+  .button-negative-action {
+    @apply border-red-600 hover:bg-red-600 hover:text-white hover:drop-shadow-lg
   }
   .std-border-bottom {
     @apply border-b-2 border-gray-500

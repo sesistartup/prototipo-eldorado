@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <section id="signature-container">
-      <main>
-        <canvas id="signature-field">asdas</canvas>
-      </main>
-      <footer>
-        <button @click="clearSignaturePad()">Limpar</button>
-        <button @click="emitirApr()">Emitir</button>
-      </footer>
-    </section>
-  </div>
+  <section class="h-full flex flex-col justify-center  max-w-xs  w-full" id="signature-container">
+    <main>
+      <h3 class="text-left w-5/6 mx-auto">Sua assinatura:</h3>
+      <canvas class="rounded-xl border-2 border-gray drop-shadow-lg w-5/6 mx-auto" id="signature-field" />
+    </main>
+    <footer class="mt-5 flex justify-evenly">
+      <!-- <button class="std-button button-negative-action" @click="clearSignaturePad()">Reprovar</button> -->
+      <button class="std-button button-neutral-action" @click="clearSignaturePad()">Limpar</button>
+      <button class="std-button button-positive-action" @click="emitirApr()">Emitir</button>
+    </footer>
+  </section>
 </template>
 
 <script setup>
@@ -69,10 +69,3 @@ import { onMounted } from 'vue';
     signaturePad = injectSignaturePad()
   })
 </script>
-
-<style scoped>
-  #signature-field {
-    border: 1px solid gray;
-    border-radius: 15px;
-  }
-</style>

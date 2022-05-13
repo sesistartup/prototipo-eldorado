@@ -10,7 +10,7 @@
       id="password" placeholder="password" v-model="login.pass">
     </main>
     <footer class="h-8 mt-3 flex flex-col justify-center">
-      <button v-if="!templateControllers.isAwaitingLoginResponse" class="std-button-positive-action" @click="logUserIn(login.email, login.pass)">Entrar</button>
+      <button v-if="!templateControllers.isAwaitingLoginResponse" class="std-button button-positive-action" @click="logUserIn(login.email, login.pass)">Entrar</button>
       <div v-else class="w-[30px] h-[4px] bg-green-600 animate-spin"/>
     </footer>
   </section>

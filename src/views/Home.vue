@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center justify-between h-full py-10">
     <ContainerDeAPRs />
-    <button class="std-button-positive-action" @click="$router.push({ name: 'apr'})">Emitir APR</button>
+    <button class="std-button button-positive-action" @click="$router.push({ name: 'apr'})">Emitir APR</button>
   </div>
 </template>
 
