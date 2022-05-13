@@ -1,6 +1,6 @@
 <template>
   <h3>EPI's Específicos</h3>
-  <div class="flex flex-col h-[500px] w-5/6">
+  <div class="flex flex-col justify-around h-[500px] w-5/6 bg-white drop-shadow-lg rounded-md px-4">
     <div id="check-container">
       <input type="checkbox" name="check-botina" id="check-botina">
       <label for="check-botina">Botina Segurança Eletricista</label>
@@ -41,25 +41,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-
-  onMounted(() => {
-    const containers = document.querySelectorAll('#check-container')
-    containers.forEach((container) => {
-      container.classList.add('flex')
-      container.classList.add('items-center')
-      container.classList.add('std-input-field')
-    })
-    // const inputs = document.querySelectorAll('input')
-    // inputs.forEach((input) => {
-    //   input.classList.add('std-input-field')
-    //   input.classList.add('w-full')
-    //   input.classList.add('mt-0')
-    // })
-    const labels = document.querySelectorAll('label')
-    labels.forEach((label) => {
-      label.classList.add('px-4')
-      // label.classList.add('leaning-normal')
-    })
-  })
+import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
+styleCheckboxGroup()
 </script>

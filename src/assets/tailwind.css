@@ -11,4 +11,7 @@
   .std-button-positive-action {
     @apply border-solid rounded-2xl border-2 border-green-600 px-4 h-10 leading-10 hover:bg-green-600 hover:text-white hover:drop-shadow-lg
   }
+  .std-border-bottom {
+    @apply border-b-2 border-gray-500
+  }
 }
