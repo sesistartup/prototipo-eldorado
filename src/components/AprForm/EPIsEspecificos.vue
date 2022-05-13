@@ -42,5 +42,6 @@
 
 <script setup>
 import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
-styleCheckboxGroup()
+import { getAprState } from '@/utils/getAprState'
+styleCheckboxGroup(getAprState())
 </script>

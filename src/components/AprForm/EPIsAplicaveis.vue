@@ -10,7 +10,8 @@
 
 <script setup>
 import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
-styleCheckboxGroup()
+import { getAprState } from '@/utils/getAprState'
+styleCheckboxGroup(getAprState())
 
 // eslint-disable-next-line no-undef
 const props = defineProps({

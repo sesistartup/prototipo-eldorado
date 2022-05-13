@@ -7,6 +7,10 @@
     <EPIsAplicaveis :epis-aplicaveis="episAplicaveis[1]" v-if="page === 4" />
     <FerramentasDedicadas v-if="page === 5" />
     <ProcedimentosAplicaveis v-if="page === 6" />
+    <EtapasAtividade v-if="page === 7" />
+    <PerigoOuRisco v-if="page === 8" />
+    <ConsequenciasDescricao v-if="page === 9" />
+    <MedidasPreventivas v-if="page === 10" />
     <div class="w-5/6 mt-5 flex justify-between">
       <button @click="returnPage()">Anterior</button>
       <button @click="nextPage()">{{ nextBtnText }}</button>
@@ -15,14 +19,19 @@
 </template>
 
 <script setup>
+import { ref, computed, provide } from 'vue';
 import InfosIniciais from '@/components/AprForm/InfosIniciais.vue'
 import DescricaoTarefa from '@/components/AprForm/DescricaoTarefa.vue'
 import EPIsEspecificos from '@/components/AprForm/EPIsEspecificos.vue'
-import { ref, computed } from 'vue';
 import EPIsAplicaveis from '@/components/AprForm/EPIsAplicaveis.vue';
-import FerramentasDedicadas from '../components/AprForm/FerramentasDedicadas.vue';
-import ProcedimentosAplicaveis from '../components/AprForm/ProcedimentosAplicaveis.vue';
-import { useRouter } from 'vue-router';
+import FerramentasDedicadas from '@/components/AprForm/FerramentasDedicadas.vue';
+import ProcedimentosAplicaveis from '@/components/AprForm/ProcedimentosAplicaveis.vue';
+import EtapasAtividade from '@/components/AprForm/EtapasAtividade.vue';
+import PerigoOuRisco from '@/components/AprForm/PerigoOuRisco.vue';
+import ConsequenciasDescricao from '@/components/AprForm/ConsequenciasDescricao.vue';
+import MedidasPreventivas from '@/components/AprForm/MedidasPreventivas.vue';
+
+import { useRouter, useRoute } from 'vue-router';
 const episAplicaveis = [
   [
     {
@@ -130,14 +139,18 @@ const router = useRouter()
 
 const page = ref(0)
 const nextPage = () => {
-  if (page.value === 6 ) router.push({ name: 'assinatura-apr'})
+  if (page.value === 10 ) router.push({ name: 'assinatura-apr'})
   page.value++
 }
 const returnPage = () => {
+  if (page.value === 0) router.push({ name: 'home-view'})
   page.value--
 }
 const nextBtnText = computed(() => {
-  if (page.value === 6) return 'Finalizar'
+  if (page.value === 10) return 'Finalizar'
   else return 'Próximo'
 })
+
+const route = useRoute()
+provide('visualizando', route.query.isVisualizing)
 </script>

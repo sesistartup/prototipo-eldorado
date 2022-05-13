@@ -18,19 +18,22 @@
 </template>
 
 <script setup>
+import { getAprState } from '@/utils/getAprState';
 import { onMounted } from 'vue';
 
   onMounted(() => {
+    const visualizando = getAprState()
     const inputs = document.querySelectorAll('input')
     inputs.forEach((input) => {
       input.classList.add('std-input-field')
       input.classList.add('w-full')
       input.classList.add('mt-0')
+      input.classList.add('disabled:bg-gray-200')
+      if (visualizando) input.setAttribute('disabled', true)
     })
     const labels = document.querySelectorAll('label')
     labels.forEach((label) => {
       label.classList.add('px-4')
-      // label.classList.add('leaning-normal')
     })
   })
 </script>

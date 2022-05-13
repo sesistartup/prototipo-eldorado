@@ -8,11 +8,13 @@ const setPositioningContainers = () => {
   })
 }
 
-const setCheckboxBehaviorOnInput = () => {
+const setCheckboxBehaviorOnInput = (isVisualizando) => {
   const inputs = document.querySelectorAll('input')
   inputs.forEach((input) => {
     input.classList.add('w-4')
     input.classList.add('h-4')
+    input.classList.add('disabled:bg-gray-200')
+    if (isVisualizando) input.setAttribute('disabled', true)
     input.addEventListener('input', () => {
       const label = document.querySelector(`label[for="${input.id}"]`)
       if (label.classList.contains('font-semibold')) {
@@ -32,10 +34,10 @@ const setLabelsStyle = () => {
     label.classList.add('whitespace-nowrap')
   })
 }
-export function styleCheckboxGroup() {
+export function styleCheckboxGroup(isVisualizando) {
   onMounted(() => {
     setPositioningContainers()
-    setCheckboxBehaviorOnInput()
+    setCheckboxBehaviorOnInput(isVisualizando)
     setLabelsStyle()
   })
 }
