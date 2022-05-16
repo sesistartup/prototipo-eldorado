@@ -9,10 +9,9 @@
 import ContainerDeAPRs from '@/components/ContainerDeAPRs'
   export default {
     name: "HomeView",
-    components: { ContainerDeAPRs }
+    components: { ContainerDeAPRs },
+    mounted() {                                                                                                                                                                                                                                                                                                               
+      sessionStorage.removeItem('infosIniciais')
+    }
 }
 </script>
-
-<style scoped>
-
-</style>

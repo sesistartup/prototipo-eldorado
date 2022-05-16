@@ -152,5 +152,5 @@ const nextBtnText = computed(() => {
 })
 
 const route = useRoute()
-provide('visualizando', route.query.isVisualizing)
+provide('visualizando', route.query.isVisualizing === 'true' ? true : false)
 </script>

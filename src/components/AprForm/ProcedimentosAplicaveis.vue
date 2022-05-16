@@ -30,6 +30,6 @@
 
 <script setup>
 import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
-import { getAprState } from '@/utils/getAprState'
-styleCheckboxGroup(getAprState())
+import { isVisualizingApr } from '@/utils/isVisualizingApr'
+styleCheckboxGroup(isVisualizingApr())
 </script>

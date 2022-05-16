@@ -1,5 +1,5 @@
 import { inject } from "vue";
 
-export function getAprState() {
+export function isVisualizingApr() {
   return inject('visualizando')
 }

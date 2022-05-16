@@ -10,8 +10,8 @@
 
 <script setup>
 import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
-import { getAprState } from '@/utils/getAprState'
-styleCheckboxGroup(getAprState())
+import { isVisualizingApr } from '@/utils/isVisualizingApr'
+styleCheckboxGroup(isVisualizingApr())
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
