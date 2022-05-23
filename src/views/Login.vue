@@ -1,16 +1,26 @@
 <template>
-  <section class="flex flex-col items-center bg-white w-5/6 sm:w-[500px] m-auto rounded-md border-green-600 border-2 p-4 drop-shadow-2xl">
+  <section class="flex flex-col items-center justify-center w-full h-full">
     <header>
       <img alt="Eldorado logo" src="../assets/eldorado-logo.png" class="w-24">
     </header>
-    <main class="flex flex-col sm:w-4/6 w-5/6 relative">
+    <main class="flex flex-col w-5/6 max-w-lg relative">
       <!-- <button @click="$router.push({ name: 'assinatura-apr' })">Emitir Apr</button> -->
-      <input class="std-input-field focus:outline-none focus:border-transparent focus:ring focus:ring-lime-200 hover:border-green-400" type="text" name="email" id="email" placeholder="email" v-model="login.email">
-      <input class="std-input-field focus:outline-none focus:border-transparent focus:ring focus:ring-lime-200 hover:border-green-400" type="password" name="password"
-      id="password" placeholder="password" v-model="login.pass">
+      <div id="email-container" class="std-input-field login-input-container">
+        <label for="email" class="border-r-2 border-[#93a298] w-[3rem] h-full flex items-center justify-center">
+          <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon">
+        </label>
+        <input class="login-input-field" type="text" name="email" id="email" placeholder="email" v-model="login.email" @click="lightContainerUp('email-container')">
+      </div>
+      <div id="password-container" class="std-input-field login-input-container">
+        <label for="password" class="border-r-2 border-[#93a298] w-[3rem] h-full flex items-center justify-center">oi</label>
+        <input class="login-input-field" type="password" name="password"
+        id="password" placeholder="password" v-model="login.pass" @click="lightContainerUp('password-container')">
+        <button>oi</button>
+      </div>
     </main>
-    <footer class="h-8 mt-3 flex flex-col justify-center">
-      <button v-if="!templateControllers.isAwaitingLoginResponse" class="std-button button-positive-action" @click="logUserIn(login.email, login.pass)">Entrar</button>
+      <h3 class="text-white my-4">Esqueceu sua senha?</h3>
+    <footer class="h-8 mt-3 flex flex-col justify-center max-w-xs w-5/6 items-center">
+      <button v-if="!templateControllers.isAwaitingLoginResponse" class="std-button button-login button-hover" @click="logUserIn(login.email, login.pass)">Entrar</button>
       <div v-else class="w-[30px] h-[4px] bg-green-600 animate-spin"/>
     </footer>
   </section>
@@ -148,9 +158,21 @@ export default {
       // setTimeout(() => {
       //   nav.removeChild(failedCredentials);
       // }, 4000);
+    },
+    lightContainerUp(containerId) {
+      const container = document.querySelector(`#${containerId}`)
+      container.classList.add('border-yellow-300')
+      container.addEventListener('focusout', () => {
+        if (container.classList.contains('border-yellow-300')) container.classList.remove('border-yellow-300')
+      })
     }
   },
   mounted() {
+    const inputs = document.querySelectorAll('input')
+    inputs.forEach((input) => {
+      input.classList.add('bg-transparent')
+    })
+
     if ("Notification" in window) {
       if (Notification.permission === "default") {
         Notification.requestPermission();

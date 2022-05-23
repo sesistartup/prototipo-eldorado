@@ -1,5 +1,5 @@
 <template>
-<HeaderTemplate />
+<HeaderTemplate v-if="$route.name !== 'home'" />
   <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
@@ -12,7 +12,20 @@
 </template>
 
 <script setup>
+import { onMounted } from '@vue/runtime-core';
+import { useRouter } from 'vue-router'
 import HeaderTemplate from './components/HeaderTemplate.vue';
+onMounted(() => {
+  const router = useRouter()
+  router.beforeEach((to) => {
+    const body = document.querySelector('body')
+    if (to.name === 'home') {
+      body.setAttribute('id', 'is-home')
+    } else {
+      body.setAttribute('id', 'is-not-home')
+    }
+  })
+})
 </script>
 
 <style>
@@ -28,7 +41,12 @@ import HeaderTemplate from './components/HeaderTemplate.vue';
   align-content: center;
   /* background-color: #34b64f; */
 }
-
+body[id='is-home'] {
+  background-color: #183723;
+}
+body[id='is-not-home'] {
+  background-color: lightgreen;
+}
 nav {
   padding: 30px;
 }
