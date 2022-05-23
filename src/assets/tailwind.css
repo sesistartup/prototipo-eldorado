@@ -6,16 +6,16 @@
 
 @layer components {
   .std-input-field {
-    @apply border-solid rounded-2xl border-2 my-2;
+    @apply border-solid rounded-xl border-2 my-2;
   }
-  .login-input-container {
+  .labeled-input-container {
     @apply text-white flex h-10 pr-4 bg-gray-300/30 border-[#93a298] drop-shadow-2xl
   }
   .login-input-field {
     @apply px-2 w-full focus:ring-0 focus:border-0 focus:outline-0
   }
   .std-button {
-    @apply border-solid rounded-2xl border-2 px-4 h-10 leading-10
+    @apply border-solid rounded-xl border-2 px-4 h-10 leading-10
   }
   .button-login {
     @apply bg-white w-full text-[#183723]

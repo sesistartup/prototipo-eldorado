@@ -5,16 +5,16 @@
     </header>
     <main class="flex flex-col w-5/6 max-w-lg relative">
       <!-- <button @click="$router.push({ name: 'assinatura-apr' })">Emitir Apr</button> -->
-      <div id="email-container" class="std-input-field login-input-container">
+      <div id="email-container" class="std-input-field labeled-input-container">
         <label for="email" class="border-r-2 border-[#93a298] w-[3rem] h-full flex items-center justify-center">
           <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon">
         </label>
-        <input class="login-input-field" type="text" name="email" id="email" placeholder="email" v-model="login.email" @click="lightContainerUp('email-container')">
+        <input class="login-input-field" type="text" name="email" id="email" placeholder="email" v-model="login.email" @click="focusInputContainer('email-container', 'border-yellow-300')">
       </div>
-      <div id="password-container" class="std-input-field login-input-container">
+      <div id="password-container" class="std-input-field labeled-input-container">
         <label for="password" class="border-r-2 border-[#93a298] w-[3rem] h-full flex items-center justify-center">oi</label>
         <input class="login-input-field" type="password" name="password"
-        id="password" placeholder="password" v-model="login.pass" @click="lightContainerUp('password-container')">
+        id="password" placeholder="password" v-model="login.pass" @click="focusInputContainer('password-container', 'border-yellow-300')">
         <button>oi</button>
       </div>
     </main>
@@ -159,11 +159,11 @@ export default {
       //   nav.removeChild(failedCredentials);
       // }, 4000);
     },
-    lightContainerUp(containerId) {
+    focusInputContainer(containerId, borderColor) {
       const container = document.querySelector(`#${containerId}`)
-      container.classList.add('border-yellow-300')
+      container.classList.add(borderColor)
       container.addEventListener('focusout', () => {
-        if (container.classList.contains('border-yellow-300')) container.classList.remove('border-yellow-300')
+        if (container.classList.contains(borderColor)) container.classList.remove(borderColor)
       })
     }
   },

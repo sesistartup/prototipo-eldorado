@@ -35,11 +35,11 @@ onMounted(() => {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-content: center;
-  /* background-color: #34b64f; */
+  flex-direction: column;
+  align-items: center;
+  max-width: 1440px;
+  margin: auto;
 }
 body[id='is-home'] {
   background-color: #183723;

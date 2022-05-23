@@ -1,5 +1,9 @@
 <template>
-  <div class="w-full flex flex-col items-center justify-center">
+  <div class="w-72 flex flex-col items-center justify-center">
+    <FormLabel
+      :title="formTitleIndexes[page]"
+      class="mt-14 mb-4"
+    />
     <InfosIniciais v-if="page === 0" />
     <DescricaoTarefa v-if="page === 1" />
     <EPIsEspecificos v-if="page === 2"/>
@@ -11,15 +15,17 @@
     <PerigoOuRisco v-if="page === 8" />
     <ConsequenciasDescricao v-if="page === 9" />
     <MedidasPreventivas v-if="page === 10" />
-    <div class="w-5/6 mt-5 flex justify-between">
-      <button @click="returnPage()">Anterior</button>
-      <button @click="nextPage()">{{ nextBtnText }}</button>
+    <ObservacaoApr v-if="page === 11" />
+    <div class="w-full mt-5 flex justify-between">
+      <button @click="returnPage()" class="std-button border-[#9DB3A4] bg-[#9DB3A4] text-white drop-shadow-xl w-full mr-2">Anterior</button>
+      <button @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2">{{ nextBtnText }}</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, provide } from 'vue';
+import { ref, computed, provide, reactive } from 'vue';
+import FormLabel from '@/components/FormLabel.vue'
 import InfosIniciais from '@/components/AprForm/InfosIniciais.vue'
 import DescricaoTarefa from '@/components/AprForm/DescricaoTarefa.vue'
 import EPIsEspecificos from '@/components/AprForm/EPIsEspecificos.vue'
@@ -32,6 +38,7 @@ import ConsequenciasDescricao from '@/components/AprForm/ConsequenciasDescricao.
 import MedidasPreventivas from '@/components/AprForm/MedidasPreventivas.vue';
 
 import { useRouter, useRoute } from 'vue-router';
+import ObservacaoApr from '../components/AprForm/ObservacaoApr.vue';
 const episAplicaveis = [
   [
     {
@@ -135,11 +142,26 @@ const episAplicaveis = [
   ]
 ]
 
+const formTitleIndexes = reactive([
+  'APR',
+  'DESCRIÇÃO DA TAREFA',
+  `EPI's ESPECÍFICOS`,
+  `EPI'S APLICÁVEIS`,
+  `EPI'S APLICÁVEIS`,
+  'FERRAMENTAS DEDICADAS',
+  'PROCEDIMENTOS APLICÁVEIS',
+  'ETAPAS DA ATIVIDADE',
+  'PERIGO OU RISCO',
+  'CONSEQUÊNCIAS',
+  'MEDIDAS PREVENTIVAS',
+  'OBSERVAÇÃO'
+])
+
 const router = useRouter()
 
 const page = ref(0)
 const nextPage = () => {
-  if (page.value === 10 ) router.push({ name: 'assinatura-apr'})
+  if (page.value === 11 ) router.push({ name: 'assinatura-apr'})
   page.value++
 }
 const returnPage = () => {
@@ -147,7 +169,7 @@ const returnPage = () => {
   page.value--
 }
 const nextBtnText = computed(() => {
-  if (page.value === 10) return 'Finalizar'
+  if (page.value === 11) return 'Finalizar'
   else return 'Próximo'
 })
 
