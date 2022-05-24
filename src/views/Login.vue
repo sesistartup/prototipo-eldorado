@@ -1,7 +1,7 @@
 <template>
-  <section class="flex flex-col items-center justify-center w-full h-full">
+  <section class="flex flex-col items-center justify-center w-full h-full m-auto">
     <header>
-      <img alt="Eldorado logo" src="../assets/eldorado-logo.png" class="w-24">
+      <img alt="Eldorado logo" src="@/assets/logo/white-logo-with-text.png" class="w-48 mb-14">
     </header>
     <main class="flex flex-col w-5/6 max-w-lg relative">
       <!-- <button @click="$router.push({ name: 'assinatura-apr' })">Emitir Apr</button> -->

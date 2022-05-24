@@ -40,12 +40,18 @@ onMounted(() => {
   align-items: center;
   max-width: 1440px;
   margin: auto;
+  height: 100vh;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 body[id='is-home'] {
-  background-color: #183723;
+  background-image: url('@/assets/background/full-dark.png');
 }
 body[id='is-not-home'] {
-  background-color: lightgreen;
+  background-image: url('@/assets/background/mostly-white.png');
 }
 nav {
   padding: 30px;

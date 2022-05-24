@@ -4,22 +4,22 @@
     <input type="text" id="subcontratada" v-model="infosIniciais.subContratada" placeholder="Sub contratada">
     <div id="data-elaboracao-container" class="mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
       <label for="data-elaboracao" class="border-r-2 border-gray w-[4rem] h-full flex items-center justify-center text-gray-400">
-        <!-- <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon"> -->
-        oi
+        <img v-if="infosIniciais.dataElaboracao.length < 1" class="w-[1.5rem]" src="@/assets/apr/white-calendar.png" alt="account icon">
+        <img v-else class="w-[1.5rem]" src="@/assets/apr/dark-green-calendar.png" alt="account icon">
       </label>
       <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-elaboracao" id="data-elaboracao" placeholder="Data elaboração" v-model="infosIniciais.dataElaboracao" @click="focusInputContainer('data-elaboracao-container', '!border-orange-300')">
     </div>
     <div id="data-inicio-container" class="mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
       <label for="data-inicio" class="border-r-2 border-gray w-[4rem] h-full flex items-center justify-center text-gray-400">
-        <!-- <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon"> -->
-        oi
+        <img v-if="infosIniciais.dataInicio.length < 1" class="w-[1.5rem]" src="@/assets/apr/white-calendar.png" alt="account icon">
+        <img v-else class="w-[1.5rem]" src="@/assets/apr/dark-green-calendar.png" alt="account icon">
       </label>
       <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-inicio" id="data-inicio" placeholder="Data início" v-model="infosIniciais.dataInicio" @click="focusInputContainer('data-inicio-container', '!border-orange-300')">
     </div>
     <div id="data-termino-container" class="mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
       <label for="data-termino" class="border-r-2 border-gray w-[4rem] h-full flex items-center justify-center text-gray-400">
-        <!-- <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon"> -->
-        oi
+        <img v-if="infosIniciais.dataTermino.length < 1" class="w-[1.5rem]" src="@/assets/apr/white-calendar.png" alt="account icon">
+        <img v-else class="w-[1.5rem]" src="@/assets/apr/dark-green-calendar.png" alt="account icon">
       </label>
       <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-termino" id="data-termino" placeholder="Data término" v-model="infosIniciais.dataTermino" @click="focusInputContainer('data-termino-container', '!border-orange-300')">
     </div>
