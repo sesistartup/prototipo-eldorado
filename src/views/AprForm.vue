@@ -43,51 +43,63 @@ const episAplicaveis = [
   [
     {
       id: 'check-capacete-jugular',
-      name: 'Capacete com Jugular'
+      name: 'Capacete com Jugular',
+      isChecked: false
     },
     {
       id: 'check-ampla-visao',
-      name: 'Óculos Ampla Visão'
+      name: 'Óculos Ampla Visão',
+      isChecked: false
     },
     {
       id: 'check-contra-impacto',
-      name: 'Óculos Contra Impacto'
+      name: 'Óculos Contra Impacto',
+      isChecked: false
     },
     {
       id: 'check-auditivo-concha',
-      name: 'Protetor Auditivo Concha'
+      name: 'Protetor Auditivo Concha',
+      isChecked: false
     },
     {
       id: 'check-auditivo-plug',
-      name: 'Protetor Auditivo Plug'
+      name: 'Protetor Auditivo Plug',
+      isChecked: false
     },
     {
       id: 'check-mascara-fuga',
-      name: 'Máscara de Fuga'
+      name: 'Máscara de Fuga',
+      isChecked: false
     },
     {
       id: 'check-luva-vaqueta',
-      name: 'Luva de Vaqueta'
+      name: 'Luva de Vaqueta',
+      isChecked: false
     },
     {
       id: 'check-cinto-seguranca',
-      name: 'Cinto de Segurança'
+      name: 'Cinto de Segurança',
+      isChecked: false
     },
     {
       id: 'check-macacao-tyvcke',
-      name: 'Macacão Tyvcke'
+      name: 'Macacão Tyvcke',
+      isChecked: false
     },
     {
       id: 'check-touca-protecao',
-      name: 'Touca de Protecão'
+      name: 'Touca de Protecão',
+      isChecked: false
     },
     {
       id: 'check-respirador-poeira',
-      name: 'Respirador p/Poeira em Suspensão'
+      name: 'Respirador p/Poeira em Suspensão',
+      isChecked: false
     },
     {
       id: 'check-respirador-mecanico',
-      name: 'Respirador Filtro Mecânico'
+      name: 'Respirador Filtro Mecânico',
+      isChecked: false
     },
     {
       id: 'check-capa-chuva',
@@ -97,47 +109,58 @@ const episAplicaveis = [
   [
     {
       id: 'check-dispositivo-bloqueio',
-      name: 'Dispositivos de Bloqueio'
+      name: 'Dispositivos de Bloqueio',
+      isChecked: false
     },
     {
       id: 'check-cone-sinalizacao',
-      name: 'Cone de Sinalização'
+      name: 'Cone de Sinalização',
+      isChecked: false
     },
     {
       id: 'check-corrente-sinalizacao',
-      name: 'Corrente de Sinalização'
+      name: 'Corrente de Sinalização',
+      isChecked: false
     },
     {
       id: 'check-extintor',
-      name: 'Extintor'
+      name: 'Extintor',
+      isChecked: false
     },
     {
       id: 'check-linha-vida',
-      name: 'Linha de Vida (cabo guia)'
+      name: 'Linha de Vida (cabo guia)',
+      isChecked: false
     },
     {
       id: 'check-placa-sinalizacao',
-      name: 'Placa de Sinalização'
+      name: 'Placa de Sinalização',
+      isChecked: false
     },
     {
       id: 'check-protecao-fisica',
-      name: 'Proteção Física (cerca)'
+      name: 'Proteção Física (cerca)',
+      isChecked: false
     },
     {
       id: 'check-trava-queda',
-      name: 'Trava Queda'
+      name: 'Trava Queda',
+      isChecked: false
     },
     {
       id: 'check-biombo',
-      name: 'Biombo'
+      name: 'Biombo',
+      isChecked: false
     },
     {
       id: 'check-tapete-isolante',
-      name: 'Tapete Isolante'
+      name: 'Tapete Isolante',
+      isChecked: false
     },
     {
       id: 'check-bastao-salvamento',
-      name: 'Bastão de Salvamento'
+      name: 'Bastão de Salvamento',
+      isChecked: false
     }
   ]
 ]

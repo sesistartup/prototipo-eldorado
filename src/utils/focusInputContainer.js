@@ -1,5 +1,4 @@
 export function focusInputContainer(containerId, focusColor) {
-  console.log('uai')
   const classes = focusColor.split(' ')
   const container = document.querySelector(`#${containerId}`)
   

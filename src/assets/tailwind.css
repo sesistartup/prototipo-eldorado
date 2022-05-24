@@ -6,13 +6,16 @@
 
 @layer components {
   .std-input-field {
-    @apply border-solid rounded-xl border-2 my-2;
+    @apply border-solid rounded-xl border-2 my-2 focus:border-orange-300 focus:ring-0 focus:border-2 focus:outline-0;
   }
   .labeled-input-container {
     @apply text-white flex h-10 pr-4 bg-gray-300/30 border-[#93a298] drop-shadow-2xl
   }
   .login-input-field {
     @apply px-2 w-full focus:ring-0 focus:border-0 focus:outline-0
+  }
+  .marked-checkbox {
+    @apply !bg-[#faf7c1] text-[#3e6c4d] !border-[#faf7c1]
   }
   .std-button {
     @apply border-solid rounded-xl border-2 px-4 h-10 leading-10

@@ -7,21 +7,21 @@
         <!-- <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon"> -->
         oi
       </label>
-      <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:border-0 focus:outline-0" type="date" name="data-elaboracao" id="data-elaboracao" placeholder="Data elaboração" v-model="infosIniciais.dataElaboracao" @click="focusInputContainer('data-elaboracao-container', '!border-yellow-300')">
+      <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-elaboracao" id="data-elaboracao" placeholder="Data elaboração" v-model="infosIniciais.dataElaboracao" @click="focusInputContainer('data-elaboracao-container', '!border-orange-300')">
     </div>
     <div id="data-inicio-container" class="mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
       <label for="data-inicio" class="border-r-2 border-gray w-[4rem] h-full flex items-center justify-center text-gray-400">
         <!-- <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon"> -->
         oi
       </label>
-      <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:border-0 focus:outline-0" type="date" name="data-inicio" id="data-inicio" placeholder="Data início" v-model="infosIniciais.dataInicio" @click="focusInputContainer('data-inicio-container', '!border-yellow-300')">
+      <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-inicio" id="data-inicio" placeholder="Data início" v-model="infosIniciais.dataInicio" @click="focusInputContainer('data-inicio-container', '!border-orange-300')">
     </div>
     <div id="data-termino-container" class="mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
       <label for="data-termino" class="border-r-2 border-gray w-[4rem] h-full flex items-center justify-center text-gray-400">
         <!-- <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon"> -->
         oi
       </label>
-      <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:border-0 focus:outline-0" type="date" name="data-termino" id="data-termino" placeholder="Data término" v-model="infosIniciais.dataTermino" @click="focusInputContainer('data-termino-container', '!border-yellow-300')">
+      <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-termino" id="data-termino" placeholder="Data término" v-model="infosIniciais.dataTermino" @click="focusInputContainer('data-termino-container', '!border-orange-300')">
     </div>
     <input type="text" id="area" v-model="infosIniciais.area" placeholder="Área">
     <!-- <label for="revalidacao">Revalidação</label> -->

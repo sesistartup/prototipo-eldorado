@@ -11,16 +11,26 @@ const setPositioningContainers = () => {
 const setCheckboxBehaviorOnInput = (isVisualizando) => {
   const inputs = document.querySelectorAll('input')
   inputs.forEach((input) => {
-    input.classList.add('w-4')
-    input.classList.add('h-4')
+    input.classList.add('w-12')
+    input.classList.add('h-12')
+    input.classList.add('appearance-none')
     input.classList.add('disabled:bg-gray-200')
+    input.classList.add('border-r-2')
     if (isVisualizando) input.setAttribute('disabled', true)
-    input.addEventListener('input', () => {
-      const label = document.querySelector(`label[for="${input.id}"]`)
-      if (label.classList.contains('font-semibold')) {
-        label.classList.remove('font-semibold')
+    const parent = input.parentElement
+    // parent.addEventListener('click', () => {
+    //   if (parent.classList.contains('marked-checkbox')) {
+    //     parent.classList.remove('marked-checkbox')
+    //   } else {
+    //     parent.classList.add('marked-checkbox')
+    //   }
+    // })
+    const label = document.querySelector(`label[for="${input.id}"]`)
+    label.addEventListener('click', () => {
+      if (parent.classList.contains('marked-checkbox')) {
+        parent.classList.remove('marked-checkbox')
       } else {
-        label.classList.add('font-semibold')
+        parent.classList.add('marked-checkbox')
       }
     })
   })
@@ -29,9 +39,14 @@ const setCheckboxBehaviorOnInput = (isVisualizando) => {
 const setLabelsStyle = () => {
   const labels = document.querySelectorAll('label')
   labels.forEach((label) => {
-    label.classList.add('px-2')
+    label.classList.add('pl-14')
     label.classList.add('text-sm')
     label.classList.add('whitespace-nowrap')
+    label.classList.add('h-12')
+    label.classList.add('leading-[3rem]')
+    label.classList.add('w-full')
+    label.classList.add('absolute')
+    label.classList.add('text-left')
   })
 }
 export function styleCheckboxGroup(isVisualizando) {
