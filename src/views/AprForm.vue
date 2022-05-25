@@ -1,9 +1,9 @@
 <template>
-  <div class="w-72 flex flex-col items-center justify-center">
+  <div class="w-72 h-full flex flex-col items-center justify-center">
     <FormLabel
       :title="formTitleIndexes[page]"
       class="mt-14 mb-4"
-      v-if="page !== 12"
+      v-if="page < 12"
     />
     <InfosIniciais v-if="page === 0" />
     <DescricaoTarefa v-if="page === 1" />
@@ -18,6 +18,7 @@
     <MedidasPreventivas v-if="page === 10" />
     <ObservacaoApr v-if="page === 11" />
     <AssinaturaUsuariosApr v-if="page === 12" />
+    <AssinaturaResponsaveisApr v-if="page === 13" />
     <div class="w-full mt-5 flex justify-between">
       <button @click="returnPage()" class="std-button border-[#9DB3A4] bg-[#9DB3A4] text-white drop-shadow-xl w-full mr-2">Anterior</button>
       <button @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2">{{ nextBtnText }}</button>
@@ -42,6 +43,7 @@ import MedidasPreventivas from '@/components/AprForm/MedidasPreventivas.vue';
 import { useRouter, useRoute } from 'vue-router';
 import ObservacaoApr from '../components/AprForm/ObservacaoApr.vue';
 import AssinaturaUsuariosApr from '@/components/Assinaturas/AssinaturaUsuariosApr.vue';
+import AssinaturaResponsaveisApr from '@/components/Assinaturas/AssinaturaResponsaveisApr.vue';
 const episAplicaveis = [
   [
     {
@@ -187,7 +189,7 @@ const router = useRouter()
 
 const page = ref(0)
 const nextPage = () => {
-  if (page.value === 12 ) router.push({ name: 'assinatura-apr'})
+  if (page.value === 13 ) router.push({ name: 'assinatura-apr'})
   page.value++
 }
 const returnPage = () => {
@@ -195,7 +197,7 @@ const returnPage = () => {
   page.value--
 }
 const nextBtnText = computed(() => {
-  if (page.value === 12) return 'Criar'
+  if (page.value === 13) return 'Criar'
   else return 'Próximo'
 })
 

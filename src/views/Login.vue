@@ -7,15 +7,17 @@
       <!-- <button @click="$router.push({ name: 'assinatura-apr' })">Emitir Apr</button> -->
       <div id="email-container" class="std-input-field labeled-input-container">
         <label for="email" class="border-r-2 border-[#93a298] w-[3rem] h-full flex items-center justify-center">
-          <img class="w-[1.5rem]" src="@/assets/account-icon.svg" alt="account icon">
+          <img class="w-[22px]" src="@/assets/account-icon.svg" alt="account icon">
         </label>
         <input class="login-input-field" type="text" name="email" id="email" placeholder="email" v-model="login.email" @click="focusInputContainer('email-container', 'border-yellow-300')">
       </div>
       <div id="password-container" class="std-input-field labeled-input-container">
-        <label for="password" class="border-r-2 border-[#93a298] w-[3rem] h-full flex items-center justify-center">oi</label>
+        <label for="password" class="border-r-2 border-[#93a298] w-[3rem] h-full flex items-center justify-center">
+          <img src="@/assets/icons/padlock.png" alt="Cadeado" class="w-[14px]">
+        </label>
         <input class="login-input-field" type="password" name="password"
         id="password" placeholder="password" v-model="login.pass" @click="focusInputContainer('password-container', 'border-yellow-300')">
-        <button>oi</button>
+        <button @click="togglePasswordVisibility()" class="w-[2rem] h-auto eye" />
       </div>
     </main>
       <h3 class="text-white my-4">Esqueceu sua senha?</h3>
@@ -165,6 +167,14 @@ export default {
       container.addEventListener('focusout', () => {
         if (container.classList.contains(borderColor)) container.classList.remove(borderColor)
       })
+    },
+    togglePasswordVisibility() {
+      const passField = document.querySelector('#password')
+      if (passField.getAttribute('type') === 'password') {
+        passField.setAttribute('type', 'text')
+      } else {
+        passField.setAttribute('type', 'password')
+      }
     }
   },
   mounted() {
@@ -184,3 +194,12 @@ export default {
   }
 }
 </script>
+
+<style scoper>
+  .eye {
+    background-image: url('@/assets/icons/eye-password-visibility.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-y: center;
+  }
+</style>
