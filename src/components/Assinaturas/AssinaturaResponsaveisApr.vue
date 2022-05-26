@@ -1,8 +1,8 @@
 <template>
-    <FormLabel
-      title="ASSINATURAS RESPONSÁVEIS"
-      class="mt-14 mb-4 flex justify-between items-center"
-    />
+  <FormLabel
+    title="ASSINATURAS RESPONSÁVEIS"
+    class="mt-14 mb-4 flex justify-between items-center"
+  />
   <div class="h-[400px] w-full drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
     <div class="h-[320px] rounded-md bg-white border-white border-2 py-2 px-4 ">
       <AssinaturaView v-for="(assinatura, index) in assinaturas" :key="index"
@@ -15,8 +15,10 @@
     </div>
   </div>
   <ModalAssinaturaResposavel
+    v-if="isModalVisible"
     :is-visible="isModalVisible"
     @hidding="isModalVisible = false"
+    @emitirapr="emitirApr($event)"
   />
 </template>
 
@@ -27,6 +29,7 @@ import { reactive, ref } from 'vue'
 import AssinaturaView from './AssinaturaView.vue';
 
 const isModalVisible = ref(false)
+
 const assinaturas = reactive([
   {
     name: 'Emitente',
@@ -53,6 +56,17 @@ const assinaturas = reactive([
     isSigned: false
   }
 ])
+
+const emitirApr = async (data) => {
+  await fetch('https://demo-eldorado.loca.lt/apr', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      'Bypass-Tunnel-Reminder': 'Hi tunnel'
+    },
+  });
+}
 </script>
 
 <style scoped>

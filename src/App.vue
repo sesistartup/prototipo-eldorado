@@ -29,8 +29,13 @@ onMounted(() => {
 </script>
 
 <style>
+
+@font-face {
+  font-family: 'Inter';
+  src: url('@/assets/fonts/inter/Inter-VariableFont_slnt\,wght.ttf');
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-72 h-full flex flex-col items-center justify-center">
+  <div class="w-[302px] h-full flex flex-col items-center justify-center">
     <FormLabel
       :title="formTitleIndexes[page]"
       class="mt-14 mb-4"
@@ -21,7 +21,7 @@
     <AssinaturaResponsaveisApr v-if="page === 13" />
     <div class="w-full mt-5 flex justify-between">
       <button @click="returnPage()" class="std-button border-[#9DB3A4] bg-[#9DB3A4] text-white drop-shadow-xl w-full mr-2">Anterior</button>
-      <button @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2">{{ nextBtnText }}</button>
+      <button v-if="page !== 13" @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2">{{ nextBtnText }}</button>
     </div>
   </div>
 </template>
@@ -187,7 +187,7 @@ const formTitleIndexes = reactive([
 
 const router = useRouter()
 
-const page = ref(0)
+const page = ref(13)
 const nextPage = () => {
   if (page.value === 13 ) router.push({ name: 'assinatura-apr'})
   page.value++
