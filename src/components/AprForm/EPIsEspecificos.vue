@@ -9,14 +9,15 @@
 </template>
 
 <script setup>
-import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
+import { styleCheckboxGroup, markCheckedBox } from '@/utils/checkboxGroupStyle'
 import { isVisualizingApr } from '@/utils/isVisualizingApr'
 import { extractIdFromName } from '@/utils/extractIdFromName'
-import { ref } from 'vue'
+import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import CheckItem from '../GraphicUtils/CheckItem.vue';
 styleCheckboxGroup(isVisualizingApr())
 
-const episEspecificos = ref([
+let episEspecificos = ref([
   {
     name: 'Botina Segurança Eletricista',
     isChecked: false
@@ -54,6 +55,15 @@ const episEspecificos = ref([
     isChecked: false
   }
 ])
+onMounted(() => {
+  const storedData = getSessionData('episEspecificos')
+  if (storedData) episEspecificos.value = [ ...storedData ]
+
+  markCheckedBox(episEspecificos.value)
+})
+onBeforeUnmount(() => {
+  setSessionData('episEspecificos', episEspecificos.value)
+})
 
 </script>
 

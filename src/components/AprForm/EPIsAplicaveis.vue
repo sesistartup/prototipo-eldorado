@@ -9,15 +9,27 @@
 </template>
 
 <script setup>
-import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
+import { styleCheckboxGroup, markCheckedBox } from '@/utils/checkboxGroupStyle'
 import { isVisualizingApr } from '@/utils/isVisualizingApr'
+import { setSessionData, getSessionData } from '@/utils/sessionStoreUtils';
 import CheckItem from '@/components/GraphicUtils/CheckItem.vue'
-import { ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 styleCheckboxGroup(isVisualizingApr())
 
 // eslint-disable-next-line no-undef
 const props = defineProps({
-  episAplicaveis: Array
+  episAplicaveis: Array,
+  formId: Number
 })
-const episAplicaveis = ref(props.episAplicaveis)
+let episAplicaveis = ref(props.episAplicaveis)
+
+onMounted(() => {
+  const sessionData = getSessionData(`epis-aplicaveis${props.formId}`)
+  if (sessionData) episAplicaveis.value = [ ...sessionData ]
+  markCheckedBox(episAplicaveis.value)
+})
+onBeforeUnmount(() => {
+  sessionStorage.removeItem(`epis-aplicaveis${props.formId}`)
+  setSessionData(`epis-aplicaveis${props.formId}`, episAplicaveis.value)
+})
 </script>

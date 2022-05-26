@@ -24,7 +24,6 @@
       <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-termino" id="data-termino" placeholder="Data término" v-model="infosIniciais.dataTermino" @click="focusInputContainer('data-termino-container', '!border-orange-300')">
     </div>
     <input type="text" id="area" v-model="infosIniciais.area" placeholder="Área">
-    <!-- <label for="revalidacao">Revalidação</label> -->
     <input type="text" id="revalidacao" v-model="infosIniciais.revalidacao" placeholder="Revalidação">
   </div>
 </template>
@@ -32,6 +31,7 @@
 <script setup>
 import { isVisualizingApr } from '@/utils/isVisualizingApr';
 import { focusInputContainer } from '@/utils/focusInputContainer';
+import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 
 // TODO: handle data throught rendering (consider pinia)
@@ -62,13 +62,11 @@ onMounted(() => {
     label.classList.add('px-4')
     label.classList.add('mr-auto')
   })
-  if (!isVisualizingApr()) {
-    const sessionData = JSON.parse(sessionStorage.getItem('infosIniciais'))
-    if (sessionData) infosIniciais.value = { ...sessionData }
-  }
+  
+  const storedData = getSessionData('infosIniciais')
+  if (storedData) infosIniciais.value = { ...storedData}
 })
 onBeforeUnmount(() => {
-  sessionStorage.removeItem('infosIniciais')
-  sessionStorage.setItem('infosIniciais', JSON.stringify(infosIniciais.value))
+  setSessionData('infosIniciais', infosIniciais.value)
 })
 </script>

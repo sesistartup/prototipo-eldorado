@@ -56,3 +56,17 @@ export function styleCheckboxGroup(isVisualizando) {
     setLabelsStyle()
   })
 }
+
+export 
+
+function markCheckedBox(arrayOfObj) {
+  const inputs = document.querySelectorAll('input[type="checkbox"]')
+  let counter = 0
+  for (const input of inputs) {
+    if (arrayOfObj[counter].isChecked) {
+      const parent = input.parentNode
+      parent.classList.add('marked-checkbox')
+    }
+    counter++
+  }
+}
