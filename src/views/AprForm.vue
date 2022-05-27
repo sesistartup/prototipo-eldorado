@@ -36,6 +36,7 @@
 
 <script setup>
 import { ref, computed, provide, reactive } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import FormLabel from '@/components/FormLabel.vue'
 import InfosIniciais from '@/components/AprForm/InfosIniciais.vue'
 import DescricaoTarefa from '@/components/AprForm/DescricaoTarefa.vue'
@@ -47,8 +48,6 @@ import EtapasAtividade from '@/components/AprForm/EtapasAtividade.vue';
 import PerigoOuRisco from '@/components/AprForm/PerigoOuRisco.vue';
 import ConsequenciasDescricao from '@/components/AprForm/ConsequenciasDescricao.vue';
 import MedidasPreventivas from '@/components/AprForm/MedidasPreventivas.vue';
-
-import { useRouter, useRoute } from 'vue-router';
 import ObservacaoApr from '../components/AprForm/ObservacaoApr.vue';
 import AssinaturaUsuariosApr from '@/components/Assinaturas/AssinaturaUsuariosApr.vue';
 import AssinaturaResponsaveisApr from '@/components/Assinaturas/AssinaturaResponsaveisApr.vue';

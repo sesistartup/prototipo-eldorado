@@ -6,10 +6,10 @@
   <div class="h-[400px] w-full drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
     <div class="h-[320px] rounded-md bg-white border-white border-2 py-2 px-4 ">
       <AssinaturaView v-for="(assinatura, index) in assinaturas" :key="index"
-        :signatureName="assinatura.name"
-        :signatureDate="assinatura.date"
-        :signatureTime="assinatura.time"
-        :isSigned="assinatura.isSigned"
+        :title="assinatura.name"
+        :first-bottom-info="assinatura.date"
+        :second-bottom-info="assinatura.time"
+        :is-signed="assinatura.isSigned"
         @openmodal="isModalVisible = true"
       />
     </div>

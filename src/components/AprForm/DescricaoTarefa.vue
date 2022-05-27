@@ -7,7 +7,7 @@ import { disableTextarea } from '@/utils/disableTextarea'
 import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-let descricaoTarefa = ref('')
+const descricaoTarefa = ref('')
 onMounted(() => {
   disableTextarea()
   const storedData = getSessionData('descricaoTarefa')

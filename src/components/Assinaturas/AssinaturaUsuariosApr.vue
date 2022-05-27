@@ -5,22 +5,54 @@
     >
       <button id="add-user-signature" class="text-white rounded-xl w-32 h-10 leading-10 bg-[#385c48] drop-shadow-lg text-right px-4" @click="openSignatureModal()">Adicionar</button>
     </FormLabel>
-  <div class="h-[400px] w-full rounded-md bg-white border-white border-2 py-2 px-4 drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto" />
+  <div id="signature-box" class="h-[400px] w-full rounded-md bg-white border-white border-2 py-2 px-4 drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
+    <div v-if="signatureMemo.length > 0">
+      <AssinaturaView
+        v-for="(signature, index) in signatureMemo"
+        :key="index"
+        :title="signature.title"
+        :first-bottom-info="signature.firstBottomInfo"
+        :second-bottom-info="signature.secondBottomInfo"
+        :is-signed="false"
+      />
+    </div>
+  </div>
   <ModalIncluirAssinaturaUsuario
     :is-visible="isModalVisible"
     @hidding="isModalVisible = false"
+    @include="setNewSignature($event)"
   />
 </template>
 
 <script setup>
 import FormLabel from '../FormLabel.vue';
 import ModalIncluirAssinaturaUsuario from '@/components/Modal/ModalIncluirAssinaturaUsuario.vue'
-import { ref } from 'vue'
+import AssinaturaView from './AssinaturaView.vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
 
 const isModalVisible = ref(false)
 function openSignatureModal() {
   isModalVisible.value = true
 }
+
+const signatureMemo = ref([])
+function setNewSignature(e) {
+  signatureMemo.value.push({
+    title: e.nome,
+    firstBottomInfo: e.empresa,
+    secondBottomInfo: e.funcao,
+    isSigned: false
+  })
+}
+// TODO: make this component implement signature pad
+onMounted(() => {
+  const storedData = getSessionData('assinature-usuarios-apr')
+  if (storedData) signatureMemo.value = [ ...storedData ]
+})
+onBeforeUnmount(() => {
+  setSessionData('assinature-usuarios-apr', signatureMemo.value)
+})
 </script>
 
 <style scoped>

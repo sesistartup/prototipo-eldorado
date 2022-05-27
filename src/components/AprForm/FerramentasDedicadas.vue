@@ -9,10 +9,11 @@
 </template>
 
 <script setup>
-import { styleCheckboxGroup } from '@/utils/checkboxGroupStyle'
+import { styleCheckboxGroup, markCheckedBox } from '@/utils/checkboxGroupStyle'
 import { isVisualizingApr } from '@/utils/isVisualizingApr'
+import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
 import { extractIdFromName } from '@/utils/extractIdFromName';
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount} from 'vue';
 import CheckItem from '../GraphicUtils/CheckItem.vue';
 styleCheckboxGroup(isVisualizingApr())
 
@@ -62,4 +63,12 @@ const ferramentasDedicadas = ref([
     isChecked: false
   }
 ])
+onMounted(() => {
+  const storedData = getSessionData('ferramentasDedicadas')
+  if (storedData) ferramentasDedicadas.value = [ ...storedData ]
+  markCheckedBox(ferramentasDedicadas.value)
+})
+onBeforeUnmount(() => {
+  setSessionData('ferramentasDedicadas', ferramentasDedicadas.value)
+})
 </script>
