@@ -5,10 +5,10 @@
     >
       <button id="add-user-signature" class="text-white rounded-xl w-32 h-10 leading-10 bg-[#385c48] drop-shadow-lg text-right px-4" @click="openSignatureModal()">Adicionar</button>
     </FormLabel>
-  <div id="signature-box" class="h-[400px] w-full rounded-md bg-white border-white border-2 py-2 px-4 drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
-    <div v-if="signatureMemo.length > 0">
+  <div id="signature-box" class="h-[400px] w-5/6 rounded-md bg-white border-white border-2 py-2 px-4 drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
+    <div v-if="assinaturaUsuarios.length > 0">
       <AssinaturaView
-        v-for="(signature, index) in signatureMemo"
+        v-for="(signature, index) in assinaturaUsuarios"
         :key="index"
         :title="signature.title"
         :first-bottom-info="signature.firstBottomInfo"
@@ -36,9 +36,9 @@ function openSignatureModal() {
   isModalVisible.value = true
 }
 
-const signatureMemo = ref([])
+const assinaturaUsuarios = ref([])
 function setNewSignature(e) {
-  signatureMemo.value.push({
+  assinaturaUsuarios.value.push({
     title: e.nome,
     firstBottomInfo: e.empresa,
     secondBottomInfo: e.funcao,
@@ -47,11 +47,13 @@ function setNewSignature(e) {
 }
 // TODO: make this component implement signature pad
 onMounted(() => {
-  const storedData = getSessionData('assinature-usuarios-apr')
-  if (storedData) signatureMemo.value = [ ...storedData ]
+  const aprForm = getSessionData('aprForm')
+  if (aprForm.assinaturaUsuarios) assinaturaUsuarios.value = [ ...aprForm.assinaturaUsuarios ]
 })
 onBeforeUnmount(() => {
-  setSessionData('assinature-usuarios-apr', signatureMemo.value)
+  const aprForm = getSessionData('aprForm')
+  aprForm.assinaturaUsuarios = assinaturaUsuarios.value
+  setSessionData('aprForm', aprForm)
 })
 </script>
 

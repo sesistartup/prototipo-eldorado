@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col justify-between h-[400px] w-full overflow-auto drop-shadow-lg">
-    <div v-for="(epi, index) in episAplicaveis" :key="index" id="check-container" class="h-12 std-input-field bg-white border-white drop-shadow-xl relative">
+  <div class="flex flex-col items-center justify-between h-[400px] w-full overflow-auto">
+    <div v-for="(epi, index) in episAplicaveis" :key="index" id="check-container" class="h-12 std-input-field bg-white border-white drop-shadow-xl relative w-5/6">
       <CheckItem v-if="epi.isChecked === true" />
       <input type="checkbox" :name="epi.id" :id="epi.id" v-model="epi.isChecked" :value="true">
       <label :for="epi.id">{{ epi.name }}</label>
@@ -24,12 +24,16 @@ const props = defineProps({
 let episAplicaveis = ref(props.episAplicaveis)
 
 onMounted(() => {
-  const sessionData = getSessionData(`epis-aplicaveis${props.formId}`)
-  if (sessionData) episAplicaveis.value = [ ...sessionData ]
+  
+  const aprForm = getSessionData('aprForm')
+  if (aprForm[`episAplicaveis${props.formId}`]) episAplicaveis.value = [ ...aprForm[`episAplicaveis${props.formId}`] ]
+
   markCheckedBox(episAplicaveis.value)
 })
 onBeforeUnmount(() => {
-  sessionStorage.removeItem(`epis-aplicaveis${props.formId}`)
-  setSessionData(`epis-aplicaveis${props.formId}`, episAplicaveis.value)
+  
+  const aprForm = getSessionData('aprForm')
+  aprForm[`episAplicaveis${props.formId}`] = episAplicaveis.value
+  setSessionData('aprForm', aprForm)
 })
 </script>

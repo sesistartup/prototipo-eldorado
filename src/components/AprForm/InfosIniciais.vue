@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap items-start justify-around bg-transparent h-[400px] w-full overflow-auto rounded-md">
+  <div class="flex flex-wrap items-start justify-around bg-transparent h-[400px] w-5/6 overflow-auto rounded-md">
     <input type="text" id="contratada" v-model="infosIniciais.contratada" placeholder="Contratada">
     <input type="text" id="subcontratada" v-model="infosIniciais.subContratada" placeholder="Sub contratada">
     <div id="data-elaboracao-container" class="mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
@@ -35,6 +35,14 @@ import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 
 // TODO: handle data throught rendering (consider pinia)
+// eslint-disable-next-line no-undef
+const props = defineProps({
+  fetchedInfos: {
+    type: Object,
+    required: false,
+    default: null
+  }
+})
 let infosIniciais = ref({
   contratada: '',
   subContratada: '',
@@ -63,10 +71,19 @@ onMounted(() => {
     label.classList.add('mr-auto')
   })
   
-  const storedData = getSessionData('infosIniciais')
-  if (storedData) infosIniciais.value = { ...storedData}
+  if (props.fetchedInfos) {
+    infosIniciais.value = props.fetchedInfos
+  } else {
+    const aprForm = getSessionData('aprForm')
+    if (aprForm.infosIniciais) infosIniciais.value = { ...aprForm.infosIniciais }
+  }
 })
 onBeforeUnmount(() => {
-  setSessionData('infosIniciais', infosIniciais.value)
+  let aprForm = getSessionData('aprForm')
+  if (!aprForm) {
+    aprForm = {}
+  }
+  aprForm.infosIniciais = infosIniciais.value
+  setSessionData('aprForm', aprForm)
 })
 </script>

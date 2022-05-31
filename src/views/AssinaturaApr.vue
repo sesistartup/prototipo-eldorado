@@ -48,10 +48,10 @@ import { onMounted } from 'vue';
   const emitirApr = async () => {
     if (!signaturePad.isEmpty()) {
       const signatureData = signaturePad.toData()
-      const email = sessionStorage.getItem('email')
+      const user = JSON.parse(sessionStorage.getItem('user'))
       const payload = {
         signatureData: signatureData,
-        email: email
+        email: user.email
       }
       await fetch('https://demo-eldorado.loca.lt/apr', {
         method: 'POST',

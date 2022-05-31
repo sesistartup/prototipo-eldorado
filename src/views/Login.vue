@@ -103,7 +103,7 @@ export default {
         });
         if (response.status > 199 && response.status < 300) {
           const data = await response.json();
-          sessionStorage.setItem("email", data.email);
+          sessionStorage.setItem("user", JSON.stringify(data.user));
           this.$router.push({ name: 'home-view'})
         }
         else if (response.status === 404) {
@@ -182,6 +182,8 @@ export default {
     inputs.forEach((input) => {
       input.classList.add('bg-transparent')
     })
+    
+    sessionStorage.clear()
 
     if ("Notification" in window) {
       if (Notification.permission === "default") {

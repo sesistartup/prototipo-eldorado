@@ -4,13 +4,14 @@
     class="mt-14 mb-4 flex justify-between items-center"
   />
   <div class="h-[400px] w-full drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
-    <div class="h-[320px] rounded-md bg-white border-white border-2 py-2 px-4 ">
-      <AssinaturaView v-for="(assinatura, index) in assinaturas" :key="index"
+    <div class="h-[320px] w-5/6 rounded-md bg-white border-white border-2 py-2 px-4 mx-auto">
+      <AssinaturaView v-for="(assinatura, role) in assinaturas" :key="role"
+        :id="'assinatura-' + role"
         :title="assinatura.name"
         :first-bottom-info="assinatura.date"
         :second-bottom-info="assinatura.time"
         :is-signed="assinatura.isSigned"
-        @openmodal="isModalVisible = true"
+        @openmodal="checkRole(role)"
       />
     </div>
   </div>
@@ -18,15 +19,16 @@
     v-if="isModalVisible"
     :is-visible="isModalVisible"
     @hidding="isModalVisible = false"
-    @emitirapr="emitirApr($event)"
+    @assinar-apr="markSignature($event)"
   />
 </template>
 
 <script setup>
+import { reactive, ref } from 'vue'
 import FormLabel from '../FormLabel.vue';
 import ModalAssinaturaResposavel from '@/components/Modal/ModalAssinaturaResposavel.vue'
-import { reactive, ref } from 'vue'
 import AssinaturaView from './AssinaturaView.vue';
+import { getSessionData } from '@/utils/sessionStoreUtils';
 
 const isModalVisible = ref(false)
 
@@ -35,7 +37,7 @@ const assinaturas = reactive([
     name: 'Emitente',
     date: '01/01/2022',
     time: '00h00',
-    isSigned: true
+    isSigned: false
   },
   {
     name: 'Responsável atividade',
@@ -47,7 +49,7 @@ const assinaturas = reactive([
     name: 'Responsável Área',
     date: '01/01/2022',
     time: '00h00',
-    isSigned: true
+    isSigned: false
   },
   {
     name: 'Auditoria HST Eldorado',
@@ -57,15 +59,39 @@ const assinaturas = reactive([
   }
 ])
 
-const emitirApr = async (data) => {
-  await fetch('https://demo-eldorado.loca.lt/apr', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-      'Bypass-Tunnel-Reminder': 'Hi tunnel'
-    },
-  });
+const markSignature = () => {
+  const isEmitente = getSessionData('isEmitente')
+  const dateTime = new Date()
+  const date = dateTime.toLocaleDateString('pt-br')
+  const time = dateTime.toLocaleTimeString('pt-br')
+  if (isEmitente) {
+    assinaturas[0].isSigned = true
+    assinaturas[0].date = date
+    assinaturas[0].time = time
+  } else {
+    const userData = getSessionData('user')
+    assinaturas[userData.userRole].isSigned = true
+    assinaturas[userData.userRole].date = date
+    assinaturas[userData.userRole].time = time
+  }
+  isModalVisible.value = false
+}
+
+const checkRole = (role) => {
+  const isEmitente = sessionStorage.getItem('isEmitente')
+  const userData = getSessionData('user')
+  if (role === 0 && isEmitente) isModalVisible.value = true
+  else if (role === userData.userRole) isModalVisible.value = true
+  else {
+    glowRole(userData.userRole)
+  }
+}
+const glowRole = (role) => {
+  const correctRole = document.querySelector(`#assinatura-${role}`)
+  correctRole.classList.add('border-green-400')
+  setTimeout(() => {
+    correctRole.classList.remove('border-green-400')
+  }, 2000);
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col justify-between h-[400px] w-full drop-shadow-lg overflow-auto">
-    <div v-for="(ferramenta, index) in ferramentasDedicadas" :key="index" id="check-container" class="h-12 std-input-field bg-white border-white drop-shadow-xl relative">
+  <div class="flex flex-col justify-between items-center h-[400px] w-full overflow-auto">
+    <div v-for="(ferramenta, index) in ferramentasDedicadas" :key="index" id="check-container" class="h-12 std-input-field bg-white border-white drop-shadow-xl relative w-5/6">
       <CheckItem v-if="ferramenta.isChecked" />
       <input type="checkbox" :name="extractIdFromName(ferramenta.name)" :id="extractIdFromName(ferramenta.name)" v-model="ferramenta.isChecked" :value="true">
       <label :for="extractIdFromName(ferramenta.name)">{{ ferramenta.name }}</label>
@@ -64,11 +64,14 @@ const ferramentasDedicadas = ref([
   }
 ])
 onMounted(() => {
-  const storedData = getSessionData('ferramentasDedicadas')
-  if (storedData) ferramentasDedicadas.value = [ ...storedData ]
+  const aprForm = getSessionData('aprForm')
+  if (aprForm.ferramentasDedicadas) ferramentasDedicadas.value = [ ...aprForm.ferramentasDedicadas ]
+
   markCheckedBox(ferramentasDedicadas.value)
 })
 onBeforeUnmount(() => {
-  setSessionData('ferramentasDedicadas', ferramentasDedicadas.value)
+  const aprForm = getSessionData('aprForm')
+  aprForm.ferramentasDedicadas = ferramentasDedicadas.value
+  setSessionData('aprForm', aprForm)
 })
 </script>

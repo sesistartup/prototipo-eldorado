@@ -1,11 +1,12 @@
 <template>
-  <div class="w-[302px] h-full flex flex-col items-center justify-center">
+  <div class="w-full h-full flex flex-col items-center justify-center">
     <FormLabel
       :title="formTitleIndexes[page]"
       class="mt-14 mb-4"
       v-if="page < 12"
     />
-    <InfosIniciais v-if="page === 0" />
+    <div v-if="page === -1" class="w-[30px] h-[4px] bg-green-600 animate-spin"/>
+    <InfosIniciais :fetched-infos="fetchedApr.form.infosIniciais" v-if="page === 0" />
     <DescricaoTarefa v-if="page === 1" />
     <EPIsEspecificos v-if="page === 2"/>
     <EPIsAplicaveis
@@ -27,16 +28,20 @@
     <ObservacaoApr v-if="page === 11" />
     <AssinaturaUsuariosApr v-if="page === 12" />
     <AssinaturaResponsaveisApr v-if="page === 13" />
-    <div class="w-full mt-5 flex justify-between">
+    <div v-if="!awaitingResponse" class="w-5/6 mt-5 flex justify-between">
       <button @click="returnPage()" class="std-button border-[#9DB3A4] bg-[#9DB3A4] text-white drop-shadow-xl w-full mr-2">Anterior</button>
       <button @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2">{{ nextBtnText }}</button>
+    </div>
+    <div v-else class="w-5/6 mt-5 flex justify-between">
+      <div class="w-[30px] h-[4px] bg-green-600 animate-spin mx-auto"/>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, provide, reactive } from 'vue';
+import { ref, computed, provide, reactive, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { getSessionData } from '@/utils/sessionStoreUtils';
 import FormLabel from '@/components/FormLabel.vue'
 import InfosIniciais from '@/components/AprForm/InfosIniciais.vue'
 import DescricaoTarefa from '@/components/AprForm/DescricaoTarefa.vue'
@@ -194,10 +199,10 @@ const formTitleIndexes = reactive([
 
 const router = useRouter()
 
-const page = ref(0)
+const page = ref(-1)
 const nextPage = () => {
-  if (page.value === 13 ) router.push({ name: 'assinatura-apr'})
-  page.value++
+  if (page.value === 13 ) emitirApr()
+  else page.value++
 }
 const returnPage = () => {
   if (page.value === 0) router.push({ name: 'home-view'})
@@ -208,6 +213,69 @@ const nextBtnText = computed(() => {
   else return 'Próximo'
 })
 
+const awaitingResponse = ref(false)
+const emitirApr = async () => {
+  awaitingResponse.value = true
+  const form = getSessionData('aprForm')
+  const user = getSessionData('user')
+  const data = {
+    formulario: form,
+    userEmail: user.email,
+    userRole: user.userRole,
+    signatureData: getSessionData('assinaturaResponsavel')
+  }
+  const assinaturaResponsavel = getSessionData('assinaturaResponsavel')
+  if (!assinaturaResponsavel) alert('Por favor, assine a APR para emiti-la.')
+  const response = await fetch('https://demo-eldorado.loca.lt/apr', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      'Bypass-Tunnel-Reminder': 'Hi tunnel'
+    },
+  });
+  if (response.status === 201) {
+    router.push({ name: 'home-view' })
+  }
+  awaitingResponse.value = false
+}
+
 const route = useRoute()
 provide('visualizando', route.query.isVisualizing === 'true' ? true : false)
+
+const getAprById = async (aprId) => {
+  const response = await fetch('https://demo-eldorado.loca.lt/apr/getById?aprId=' + aprId, {
+    headers: {
+      "Content-Type": "application/json",
+      "Bypass-Tunnel-Reminder": "Hi tunnel"
+    },
+  })
+  return response.json()
+}
+const fetchedApr = ref({
+  form: {
+    InfosIniciais: null,
+    DescricaoTarefa: null,
+    EPIsEspecificos: null,
+    EPIsAplicaveis: null,
+    FerramentasDedicadas: null,
+    ProcedimentosAplicaveis: null,
+    EtapasAtividade: null,
+    PerigoOuRisco: null,
+    ConsequenciasDescricao: null,
+    MedidasPreventivas: null,
+    ObservacaoApr: null,
+    AssinaturaUsuariosApr: null
+  },
+  id: null
+})
+const fetchedAssinaturasResponsaveis = ref([])
+onMounted(async () => {
+  if (route.query.isVisualizing === 'true') {
+    const apr = await getAprById(route.query.id)
+    fetchedApr.value = { form: apr.formulario, id: apr.id}
+    fetchedAssinaturasResponsaveis.value = apr.assinaturas
+  }
+  page.value = 0
+})
 </script>
