@@ -4,7 +4,7 @@
       <h3 class="whitespace-nowrap font-medium pt-1 text-[0.875rem]">{{ title }}</h3>
       <div class="text-[0.5625rem] mt-auto leading-6 font-light">{{ bottomInfo }}</div>
     </div>
-    <div class="w-3/12 h-full border-l-2 leading-[50px] border-gray-200 text-[0.6875rem] text-center font-light" @click="openModalForUserToSign()">
+    <div class="w-3/12 h-full border-l-2 leading-[50px] border-gray-200 text-[0.6875rem] text-center font-light hover:cursor-pointer" @click="openModalForUserToSign()">
       {{ textIfSignedOrNot }}
     </div>
   </div>

@@ -10,7 +10,6 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 const descricaoTarefa = ref('')
 onMounted(() => {
   disableTextarea()
-  
   const aprForm = getSessionData('aprForm')
   if (aprForm.descricaoTarefa) descricaoTarefa.value = aprForm.descricaoTarefa
 })

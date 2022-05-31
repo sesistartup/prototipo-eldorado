@@ -1,10 +1,10 @@
 <template>
   <FormLabel
     title="APRs Emitidas"
-    class="mr-auto mt-5"
+    class="mt-5"
   />
-  <div class="flex flex-wrap items-start justify-around bg-transparent w-full max-h-[400px] overflow-auto rounded-md p-4 drop-shadow-lg">
-    <button v-for="(apr, index) in aprsArray" :key="index" class="button-neutral-action bg-white mx-2 w-32 h-40 border-2 border-gray-300" @click="visualizeApr(apr)">APR Nº{{ aprName(apr) }}</button>
+  <div class="flex flex-wrap bg-transparent justify-center w-full max-h-[400px] overflow-auto rounded-md p-4 drop-shadow-lg">
+    <button v-for="(apr, index) in aprsArray" :key="index" class="button-neutral-action bg-white m-2 w-28 h-32 border-2 border-gray-300" @click="visualizeApr(apr)">APR Nº <br/>{{ aprName(apr) }}</button>
   </div>
 </template>
 

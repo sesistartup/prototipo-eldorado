@@ -1,12 +1,14 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center justify-center">
-    <FormLabel
-      :title="formTitleIndexes[page]"
-      class="mt-14 mb-4"
-      v-if="page < 12"
-    />
+  <div class="w-full h-full max-w-6xl flex flex-col items-center justify-center">
+    <div class="sm:w-5/6 w-full flex justify-center sm:justify-start">
+      <FormLabel
+        :title="formTitleIndexes[page]"
+        class="mt-14 mb-4"
+        v-if="page < 12"
+      />
+    </div>
     <div v-if="page === -1" class="w-[30px] h-[4px] bg-green-600 animate-spin"/>
-    <InfosIniciais :fetched-infos="fetchedApr.form.infosIniciais" v-if="page === 0" />
+    <InfosIniciais v-if="page === 0" />
     <DescricaoTarefa v-if="page === 1" />
     <EPIsEspecificos v-if="page === 2"/>
     <EPIsAplicaveis
@@ -30,18 +32,23 @@
     <AssinaturaResponsaveisApr v-if="page === 13" />
     <div v-if="!awaitingResponse" class="w-5/6 mt-5 flex justify-between">
       <button @click="returnPage()" class="std-button border-[#9DB3A4] bg-[#9DB3A4] text-white drop-shadow-xl w-full mr-2">Anterior</button>
-      <button @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2">{{ nextBtnText }}</button>
+      <button @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2 hover:drop-shadow-2xl hover:border-lime-300">{{ nextBtnText }}</button>
     </div>
     <div v-else class="w-5/6 mt-5 flex justify-between">
       <div class="w-[30px] h-[4px] bg-green-600 animate-spin mx-auto"/>
     </div>
+    <ProgressBar
+      :total-pages="13"
+      :page="page"
+      class="mt-4"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, provide, reactive, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { getSessionData } from '@/utils/sessionStoreUtils';
+import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
 import FormLabel from '@/components/FormLabel.vue'
 import InfosIniciais from '@/components/AprForm/InfosIniciais.vue'
 import DescricaoTarefa from '@/components/AprForm/DescricaoTarefa.vue'
@@ -56,6 +63,7 @@ import MedidasPreventivas from '@/components/AprForm/MedidasPreventivas.vue';
 import ObservacaoApr from '../components/AprForm/ObservacaoApr.vue';
 import AssinaturaUsuariosApr from '@/components/Assinaturas/AssinaturaUsuariosApr.vue';
 import AssinaturaResponsaveisApr from '@/components/Assinaturas/AssinaturaResponsaveisApr.vue';
+import ProgressBar from '@/components/GraphicUtils/ProgressBar.vue';
 const episAplicaveis = [
   [
     {
@@ -218,24 +226,27 @@ const emitirApr = async () => {
   awaitingResponse.value = true
   const form = getSessionData('aprForm')
   const user = getSessionData('user')
+  const signature = getSessionData('assinaturaResponsavel')
   const data = {
     formulario: form,
     userEmail: user.email,
     userRole: user.userRole,
-    signatureData: getSessionData('assinaturaResponsavel')
+    signatureData: signature
   }
-  const assinaturaResponsavel = getSessionData('assinaturaResponsavel')
-  if (!assinaturaResponsavel) alert('Por favor, assine a APR para emiti-la.')
-  const response = await fetch('https://demo-eldorado.loca.lt/apr', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-      'Bypass-Tunnel-Reminder': 'Hi tunnel'
-    },
-  });
-  if (response.status === 201) {
-    router.push({ name: 'home-view' })
+  if (!signature) {
+    alert('Por favor, assine a APR para emiti-la.')
+  } else {
+    const response = await fetch('https://demo-eldorado.loca.lt/apr', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        'Bypass-Tunnel-Reminder': 'Hi tunnel'
+      },
+    });
+    if (response.status === 201) {
+      router.push({ name: 'home-view' })
+    }
   }
   awaitingResponse.value = false
 }
@@ -275,6 +286,8 @@ onMounted(async () => {
     const apr = await getAprById(route.query.id)
     fetchedApr.value = { form: apr.formulario, id: apr.id}
     fetchedAssinaturasResponsaveis.value = apr.assinaturas
+    setSessionData('aprForm', fetchedApr.value.form)
+    setSessionData('assinaturaResponsavel', fetchedAssinaturasResponsaveis.value)
   }
   page.value = 0
 })

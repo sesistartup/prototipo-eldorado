@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-col items-center justify-between h-[400px] w-full overflow-auto">
-    <div v-for="(epi, index) in episAplicaveis" :key="index" id="check-container" class="h-12 std-input-field bg-white border-white drop-shadow-xl relative w-5/6">
+  <div class="flex flex-col items-center justify-between h-[400px] w-5/6 overflow-y-auto overflow-x-hidden">
+    <div v-for="(epi, index) in episAplicaveis" :key="index" id="check-container" class="h-12 std-input-field bg-white border-white drop-shadow-xl relative w-full">
       <CheckItem v-if="epi.isChecked === true" />
       <input type="checkbox" :name="epi.id" :id="epi.id" v-model="epi.isChecked" :value="true">
-      <label :for="epi.id">{{ epi.name }}</label>
+      <label :for="epi.id" class="overflow-x-hidden text-ellipsis">{{ epi.name }}</label>
     </div>
   </div>
 </template>

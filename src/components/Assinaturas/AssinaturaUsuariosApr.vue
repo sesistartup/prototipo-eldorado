@@ -3,7 +3,7 @@
       title="ASSINATURAS"
       class="mt-14 mb-4 flex justify-between items-center"
     >
-      <button id="add-user-signature" class="text-white rounded-xl w-32 h-10 leading-10 bg-[#385c48] drop-shadow-lg text-right px-4" @click="openSignatureModal()">Adicionar</button>
+      <button id="add-user-signature" class="text-white rounded-xl w-32 h-10 leading-10 bg-[#385c48] drop-shadow-lg text-right px-4" @click="openSignatureModal()" :disabled="isVisualizingApr()">Adicionar</button>
     </FormLabel>
   <div id="signature-box" class="h-[400px] w-5/6 rounded-md bg-white border-white border-2 py-2 px-4 drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
     <div v-if="assinaturaUsuarios.length > 0">
@@ -25,11 +25,12 @@
 </template>
 
 <script setup>
-import FormLabel from '../FormLabel.vue';
-import ModalIncluirAssinaturaUsuario from '@/components/Modal/ModalIncluirAssinaturaUsuario.vue'
-import AssinaturaView from './AssinaturaView.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
+import FormLabel from '../FormLabel.vue';
+import { isVisualizingApr } from '@/utils/isVisualizingApr';
+import ModalIncluirAssinaturaUsuario from '@/components/Modal/ModalIncluirAssinaturaUsuario.vue'
+import AssinaturaView from './AssinaturaView.vue';
 
 const isModalVisible = ref(false)
 function openSignatureModal() {

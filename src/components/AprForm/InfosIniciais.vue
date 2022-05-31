@@ -35,14 +35,6 @@ import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 
 // TODO: handle data throught rendering (consider pinia)
-// eslint-disable-next-line no-undef
-const props = defineProps({
-  fetchedInfos: {
-    type: Object,
-    required: false,
-    default: null
-  }
-})
 let infosIniciais = ref({
   contratada: '',
   subContratada: '',
@@ -62,6 +54,7 @@ onMounted(() => {
     input.classList.add('h-12')
     input.classList.add('px-4')
     input.classList.add('border-white')
+    input.classList.add('drop-shadow-xl')
     input.classList.add('disabled:bg-gray-200')
     if (isVisualizingApr()) input.setAttribute('disabled', true)
   })
@@ -70,19 +63,15 @@ onMounted(() => {
     label.classList.add('px-4')
     label.classList.add('mr-auto')
   })
-  
-  if (props.fetchedInfos) {
-    infosIniciais.value = props.fetchedInfos
-  } else {
-    const aprForm = getSessionData('aprForm')
-    if (aprForm.infosIniciais) infosIniciais.value = { ...aprForm.infosIniciais }
-  }
+
+  const aprForm = getSessionData('aprForm')
+  if (aprForm.infosIniciais) infosIniciais.value = { ...aprForm.infosIniciais }
 })
 onBeforeUnmount(() => {
-  let aprForm = getSessionData('aprForm')
-  if (!aprForm) {
-    aprForm = {}
-  }
+  const aprForm = getSessionData('aprForm')
+  // if (!aprForm) {
+  //   aprForm = {}
+  // }
   aprForm.infosIniciais = infosIniciais.value
   setSessionData('aprForm', aprForm)
 })

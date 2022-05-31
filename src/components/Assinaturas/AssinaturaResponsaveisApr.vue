@@ -24,11 +24,12 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import FormLabel from '../FormLabel.vue';
 import ModalAssinaturaResposavel from '@/components/Modal/ModalAssinaturaResposavel.vue'
 import AssinaturaView from './AssinaturaView.vue';
-import { getSessionData } from '@/utils/sessionStoreUtils';
+import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
+import { isVisualizingApr } from '@/utils/isVisualizingApr';
 
 const isModalVisible = ref(false)
 
@@ -59,11 +60,22 @@ const assinaturas = reactive([
   }
 ])
 
-const markSignature = () => {
+const markSignature = (e) => {
   const isEmitente = getSessionData('isEmitente')
   const dateTime = new Date()
   const date = dateTime.toLocaleDateString('pt-br')
   const time = dateTime.toLocaleTimeString('pt-br')
+
+  const payload = {
+    signature: e,
+    signatureInfo: {
+      date: date,
+      time: time,
+      isSigned: true
+    }
+  }
+  setSessionData('assinaturaResponsavel', payload)
+
   if (isEmitente) {
     assinaturas[0].isSigned = true
     assinaturas[0].date = date
@@ -88,11 +100,24 @@ const checkRole = (role) => {
 }
 const glowRole = (role) => {
   const correctRole = document.querySelector(`#assinatura-${role}`)
-  correctRole.classList.add('border-green-400')
+  console.log(correctRole)
+  correctRole.classList.add('!border-green-400')
   setTimeout(() => {
-    correctRole.classList.remove('border-green-400')
+    correctRole.classList.remove('!border-green-400')
   }, 2000);
 }
+onMounted(() => {
+  if (isVisualizingApr()) {
+    const fetchedSignatures = getSessionData('assinaturaResponsavel')
+    for (const signature of fetchedSignatures) {
+      if (signature.signatureData) {
+    assinaturas[signature.userRole].isSigned = true
+    assinaturas[signature.userRole].date = signature.signatureData.signatureInfo.date
+    assinaturas[signature.userRole].time = signature.signatureData.signatureInfo.time
+      }
+    }
+  }
+})
 </script>
 
 <style scoped>

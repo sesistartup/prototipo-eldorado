@@ -1,10 +1,12 @@
-import { isVisualizingApr } from "./isVisualizingApr"
+// import { isVisualizingApr } from "./isVisualizingApr"
 
 export function getSessionData(sessionDataKey) {
-  if (!isVisualizingApr()) {
-    const sessionData = JSON.parse(sessionStorage.getItem(sessionDataKey))
-    return sessionData
-  }
+  // if (!isVisualizingApr()) {
+  //   const sessionData = JSON.parse(sessionStorage.getItem(sessionDataKey))
+  //   return sessionData
+  // }
+  const sessionData = JSON.parse(sessionStorage.getItem(sessionDataKey))
+  return sessionData
 }
 
 export function setSessionData(sessionDataKey, dataToStore) {

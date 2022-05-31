@@ -17,7 +17,7 @@
 
 <script setup>
 import BlackoutBg from '../GraphicUtils/BlackoutBg.vue';
-import { getSessionData, setSessionData } from '@/utils/sessionStoreUtils';
+import { getSessionData } from '@/utils/sessionStoreUtils';
 import SignaturePad from 'signature_pad';
 import { onMounted, onBeforeUnmount } from 'vue';
 
@@ -54,8 +54,8 @@ const assinarApr = () => {
     if (!isEmitente) {
       // build request to sign existing apr
     }
-    setSessionData('assinaturaResponsavel', signature)
-    emit('assinar-apr')
+    // setSessionData('assinaturaResponsavel', signature)
+    emit('assinar-apr', signature)
   } else {
     alert('Você precisa assinar a apr')
   }
