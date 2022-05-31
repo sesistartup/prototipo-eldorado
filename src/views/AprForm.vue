@@ -10,7 +10,7 @@
     <div v-if="page === -1" class="w-[30px] h-[4px] bg-green-600 animate-spin"/>
     <InfosIniciais v-if="page === 0" />
     <DescricaoTarefa v-if="page === 1" />
-    <EPIsEspecificos v-if="page === 2"/>
+    <EPIsEspecificos v-if="page === 2" />
     <EPIsAplicaveis
       :epis-aplicaveis="episAplicaveis[0]" 
       :form-id="episAplicaveis.length"
@@ -40,7 +40,7 @@
     <ProgressBar
       :total-pages="13"
       :page="page"
-      class="mt-4"
+      class="mt-4 mx-auto"
     />
   </div>
 </template>

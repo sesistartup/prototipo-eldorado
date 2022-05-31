@@ -14,10 +14,23 @@ const setCheckboxBehaviorOnInput = (isVisualizando) => {
     input.classList.add('w-12')
     input.classList.add('h-12')
     input.classList.add('appearance-none')
-    input.classList.add('disabled:bg-gray-200')
+    // input.classList.add('disabled:bg-gray-200')
     input.classList.add('border-r-2')
-    if (isVisualizando) input.setAttribute('disabled', true)
     const parent = input.parentElement
+    if (isVisualizando) {
+      input.setAttribute('disabled', true)
+      parent.classList.add('bg-gray-200')
+    } else {
+      input.classList.add('border-r-white')
+      const label = document.querySelector(`label[for="${input.id}"]`)
+      label.addEventListener('click', () => {
+        if (parent.classList.contains('marked-checkbox')) {
+          parent.classList.remove('marked-checkbox')
+        } else {
+          parent.classList.add('marked-checkbox')
+        }
+      })
+    }
     // parent.addEventListener('click', () => {
     //   if (parent.classList.contains('marked-checkbox')) {
     //     parent.classList.remove('marked-checkbox')
@@ -25,14 +38,6 @@ const setCheckboxBehaviorOnInput = (isVisualizando) => {
     //     parent.classList.add('marked-checkbox')
     //   }
     // })
-    const label = document.querySelector(`label[for="${input.id}"]`)
-    label.addEventListener('click', () => {
-      if (parent.classList.contains('marked-checkbox')) {
-        parent.classList.remove('marked-checkbox')
-      } else {
-        parent.classList.add('marked-checkbox')
-      }
-    })
   })
 }
 
@@ -57,9 +62,7 @@ export function styleCheckboxGroup(isVisualizando) {
   })
 }
 
-export 
-
-function markCheckedBox(arrayOfObj) {
+export function markCheckedBox(arrayOfObj) {
   const inputs = document.querySelectorAll('input[type="checkbox"]')
   let counter = 0
   for (const input of inputs) {
