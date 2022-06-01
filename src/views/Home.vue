@@ -9,9 +9,10 @@
       class="mt-4"
     /> -->
     <div class="min-h-40 h-2/6 max-h-64 w-full flex justify-center">
-      <button class="w-full h-full max-w-[200px] open-apr-form open-forms hover:drop-shadow-2xl hover:shadow-yellow-300" @click="beginNewApr" />
-      <button class="w-full h-full max-w-[200px] open-pt-form open-forms opacity-60" />
+      <button class="w-[150px] h-[150px] open-apr-form open-forms hover:drop-shadow-2xl hover:shadow-yellow-300" @click="beginNewApr" />
+      <button class="w-[150px] h-[150px] open-pt-form open-forms opacity-60" />
     </div>
+    <div class="hidden drop-shadow-lg h-[2px] w-full bg-white sm:block rounded-xl" />
     <ContainerDeAPRs />
     <!-- <button class="std-button button-positive-action mt-4" @click="$router.push({ name: 'apr', query: { isVisualizing: false }})">Emitir APR</button> -->
   </div>
