@@ -1,8 +1,10 @@
 <template>
-  <FormLabel
-    title="ASSINATURAS RESPONSÁVEIS"
-    class="mt-14 mb-4 flex justify-between items-center"
-  />
+  <div class="sm:w-5/6 w-full flex justify-center sm:justify-start">
+    <FormLabel
+      title="ASSINATURAS RESPONSÁVEIS"
+      class="mt-14 mb-4 flex justify-between items-center"
+    />
+  </div>
   <div class="h-[400px] w-full drop-shadow-lg disabled:bg-gray-200 disabled:border-gray-400 overflow-auto">
     <div class="h-[320px] w-5/6 rounded-md bg-white border-white border-2 py-2 px-4 mx-auto">
       <AssinaturaView v-for="(assinatura, role) in assinaturas" :key="role"
@@ -100,7 +102,6 @@ const checkRole = (role) => {
 }
 const glowRole = (role) => {
   const correctRole = document.querySelector(`#assinatura-${role}`)
-  console.log(correctRole)
   correctRole.classList.add('!border-green-400')
   setTimeout(() => {
     correctRole.classList.remove('!border-green-400')
@@ -108,13 +109,21 @@ const glowRole = (role) => {
 }
 onMounted(() => {
   if (isVisualizingApr()) {
-    const fetchedSignatures = getSessionData('assinaturaResponsavel')
+    const fetchedSignatures = getSessionData('assinaturasResponsaveis')
     for (const signature of fetchedSignatures) {
       if (signature.signatureData) {
-    assinaturas[signature.userRole].isSigned = true
-    assinaturas[signature.userRole].date = signature.signatureData.signatureInfo.date
-    assinaturas[signature.userRole].time = signature.signatureData.signatureInfo.time
+        assinaturas[signature.userRole].isSigned = true
+        assinaturas[signature.userRole].date = signature.signatureData.signatureInfo.date
+        assinaturas[signature.userRole].time = signature.signatureData.signatureInfo.time
       }
+    }
+  } else {
+    const signature = getSessionData('assinaturaResponsavel')
+    const user = getSessionData('user')
+    if (signature) {
+      assinaturas[user.userRole].isSigned = signature.signatureInfo.isSigned
+      assinaturas[user.userRole].date = signature.signatureInfo.date
+      assinaturas[user.userRole].time = signature.signatureInfo.time
     }
   }
 })

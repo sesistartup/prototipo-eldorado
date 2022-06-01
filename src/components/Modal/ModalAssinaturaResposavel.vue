@@ -74,8 +74,15 @@ onMounted(() => {
   signaturePad = injectSignaturePad()
   window.addEventListener('resize', resizeCanvas)
   resizeCanvas()
-  const storedData = getSessionData('assinaturaResponsavel')
-  if (storedData) signaturePad.fromData(storedData)
+  // const storedData = getSessionData('assinaturaResponsavel')
+  // if (storedData) {
+  //   if (storedData.signature) signaturePad.fromData(storedData.signature)
+  //   else {
+  //     const user = getSessionData('user')
+  //     console.log(storedData)
+  //     signaturePad.fromData(storedData[user.userRole].signatureData)
+  //   }
+  // }
 })
 onBeforeUnmount(() => {
   window.removeEventListener('resize', resizeCanvas)

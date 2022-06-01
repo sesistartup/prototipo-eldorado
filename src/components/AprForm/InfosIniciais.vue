@@ -7,7 +7,7 @@
         <img v-if="infosIniciais.dataElaboracao.length < 1" class="w-[1.5rem]" src="@/assets/apr/white-calendar.png" alt="account icon">
         <img v-else class="w-[1.5rem]" src="@/assets/apr/dark-green-calendar.png" alt="account icon">
       </label>
-      <div name="fake-date-placeholder" id="fake-data-elab" class="absolute left-[4.5rem] h-8 leading-7 text-gray-400 bg-white top-2 z-10" @click="setFocus('data-elaboracao')">Data Elaboração</div>
+      <div name="fake-date-placeholder" v-if="infosIniciais.dataElaboracao.length < 1" id="fake-data-elab" class="absolute left-[4.5rem] h-8 leading-7 text-gray-400 bg-white top-2 z-10" @click="setFocus('data-elaboracao')">Data Elaboração</div>
       <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-elaboracao" id="data-elaboracao" placeholder="Data elaboração" v-model="infosIniciais.dataElaboracao" @click="focusInputContainer('data-elaboracao-container', '!border-orange-300')" @focus="changeDisplayFakeLabel('fake-data-elab')" @focusout="changeDisplayFakeLabel('fake-data-elab')">
     </div>
     <div id="data-inicio-container" class="relative mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
@@ -15,7 +15,7 @@
         <img v-if="infosIniciais.dataInicio.length < 1" class="w-[1.5rem]" src="@/assets/apr/white-calendar.png" alt="account icon">
         <img v-else class="w-[1.5rem]" src="@/assets/apr/dark-green-calendar.png" alt="account icon">
       </label>
-      <div name="fake-date-placeholder" id="fake-data-inicio" class="absolute left-[4.5rem] h-8 leading-7 text-gray-400 bg-white top-2 z-10 w-32 text-left" @click="setFocus('data-inicio')">Data Início</div>
+      <div name="fake-date-placeholder" v-if="infosIniciais.dataInicio.length < 1" id="fake-data-inicio" class="absolute left-[4.5rem] h-8 leading-7 text-gray-400 bg-white top-2 z-10 w-32 text-left" @click="setFocus('data-inicio')">Data Início</div>
       <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-inicio" id="data-inicio" placeholder="Data início" v-model="infosIniciais.dataInicio" @click="focusInputContainer('data-inicio-container', '!border-orange-300')" @focus="changeDisplayFakeLabel('fake-data-inicio')" @focusout="changeDisplayFakeLabel('fake-data-inicio')">
     </div>
     <div id="data-termino-container" class="mt-0 std-input-field labeled-input-container w-full border-white bg-white drop-shadow-xl h-12">
@@ -23,7 +23,7 @@
         <img v-if="infosIniciais.dataTermino.length < 1" class="w-[1.5rem]" src="@/assets/apr/white-calendar.png" alt="account icon">
         <img v-else class="w-[1.5rem]" src="@/assets/apr/dark-green-calendar.png" alt="account icon">
       </label>
-      <div name="fake-date-placeholder" id="fake-data-termino" class="absolute left-[4.5rem] h-8 leading-7 text-gray-400 bg-white top-2 z-10 w-32 text-left" @click="setFocus('data-termino')">Data Término</div>
+      <div name="fake-date-placeholder" v-if="infosIniciais.dataTermino.length < 1" id="fake-data-termino" class="absolute left-[4.5rem] h-8 leading-7 text-gray-400 bg-white top-2 z-10 w-32 text-left" @click="setFocus('data-termino')">Data Término</div>
       <input class="bg-transparent border-none h-full text-black focus:ring-0 focus:outline-0" type="date" name="data-termino" id="data-termino" placeholder="Data término" v-model="infosIniciais.dataTermino" @click="focusInputContainer('data-termino-container', '!border-orange-300')" @focus="changeDisplayFakeLabel('fake-data-termino')" @focusout="changeDisplayFakeLabel('fake-data-termino')">
     </div>
     <input type="text" id="area" v-model="infosIniciais.area" placeholder="Área">
@@ -40,8 +40,10 @@ import { onMounted, onBeforeUnmount, ref } from 'vue';
 
 const changeDisplayFakeLabel = (e) => {
   const fake = document.querySelector(`#${e}`)
-  if (fake.classList.contains('hidden')) fake.classList.remove('hidden')
-  else fake.classList.add('hidden')
+  if (fake) {
+    if (fake.classList.contains('hidden')) fake.classList.remove('hidden')
+    else fake.classList.add('hidden')
+  }
 }
 const setFocus = (e) => {
   const fake = document.querySelector(`#${e}`)

@@ -33,6 +33,9 @@ import { setSessionData } from '@/utils/sessionStoreUtils'
     },
     mounted() {
       sessionStorage.removeItem('aprForm')
+      sessionStorage.removeItem('aprId')
+      sessionStorage.removeItem('aprApproved')
+      sessionStorage.removeItem('isEmitente')
       sessionStorage.removeItem('assinaturaResponsavel')
     }
   }

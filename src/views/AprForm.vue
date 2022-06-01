@@ -1,13 +1,14 @@
 <template>
   <div class="w-full h-full max-w-6xl flex flex-col items-center justify-center">
-    <div class="sm:w-5/6 w-full flex justify-center sm:justify-start">
+    <div v-if="page < 12" class="sm:w-5/6 w-full flex justify-center sm:justify-start">
       <FormLabel
         :title="formTitleIndexes[page]"
         class="mt-14 mb-4"
-        v-if="page < 12"
       />
     </div>
-    <div v-if="page === -1" class="w-[30px] h-[4px] bg-green-600 animate-spin"/>
+    <div v-if="page === -1" class="h-[400px] flex items-center" >
+      <div class="w-[30px] h-[4px] m-auto bg-green-600 animate-spin"/>
+    </div>
     <InfosIniciais v-if="page === 0" />
     <DescricaoTarefa v-if="page === 1" />
     <EPIsEspecificos v-if="page === 2" />
@@ -30,11 +31,11 @@
     <ObservacaoApr v-if="page === 11" />
     <AssinaturaUsuariosApr v-if="page === 12" />
     <AssinaturaResponsaveisApr v-if="page === 13" />
-    <div v-if="!awaitingResponse" class="w-5/6 mt-5 flex justify-between">
+    <div v-if="!awaitingResponse && page > -1" class="w-5/6 mt-5 flex justify-between">
       <button @click="returnPage()" class="std-button border-[#9DB3A4] bg-[#9DB3A4] text-white drop-shadow-xl w-full mr-2">Anterior</button>
       <button @click="nextPage()" class="std-button border-[#385C48] bg-[#385C48] text-white drop-shadow-xl w-full ml-2 hover:drop-shadow-2xl hover:border-lime-300">{{ nextBtnText }}</button>
     </div>
-    <div v-else class="w-5/6 mt-5 flex justify-between">
+    <div v-else-if="awaitingResponse && page > -1" class="w-5/6 h-10 mt-5 flex justify-between">
       <div class="w-[30px] h-[4px] bg-green-600 animate-spin mx-auto"/>
     </div>
     <ProgressBar
@@ -209,7 +210,7 @@ const router = useRouter()
 
 const page = ref(-1)
 const nextPage = () => {
-  if (page.value === 13 ) emitirApr()
+  if (page.value === 13 ) submitBasedOnEmitente()
   else page.value++
 }
 const returnPage = () => {
@@ -217,28 +218,31 @@ const returnPage = () => {
   page.value--
 }
 const nextBtnText = computed(() => {
-  if (page.value === 13) return 'Criar'
+  if (page.value === 13 && getSessionData('isEmitente')) return 'Criar'
+  else if (page.value === 13 && !getSessionData('isEmitente')) return 'Assinar'
+  else if (page.value === 13 && !getSessionData('isEmitente') && getSessionData('aprApproved')) return 'Voltar'
   else return 'Próximo'
 })
 
 const awaitingResponse = ref(false)
 const emitirApr = async () => {
-  awaitingResponse.value = true
-  const form = getSessionData('aprForm')
-  const user = getSessionData('user')
   const signature = getSessionData('assinaturaResponsavel')
-  const data = {
-    formulario: form,
-    userEmail: user.email,
-    userRole: user.userRole,
-    signatureData: signature
-  }
+  const user = getSessionData('user')
   if (!signature) {
     alert('Por favor, assine a APR para emiti-la.')
   } else {
+    awaitingResponse.value = true
+    const form = getSessionData('aprForm')
+    const isEmitente = getSessionData('isEmitente')
+    const payload = {
+      formulario: form,
+      userEmail: user.email,
+      userRole: isEmitente ? 0 : user.userRole,
+      signatureData: signature
+    }
     const response = await fetch('https://demo-eldorado.loca.lt/apr', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json',
         'Bypass-Tunnel-Reminder': 'Hi tunnel'
@@ -249,6 +253,40 @@ const emitirApr = async () => {
     }
   }
   awaitingResponse.value = false
+}
+const assinarApr = async () => {
+  const user = getSessionData('user')
+
+  const signature = getSessionData('assinaturaResponsavel')
+  if (!signature) {
+    alert('Por favor, assine a APR para emiti-la.')
+  } else {
+    awaitingResponse.value = true
+    const payload = {
+      aprId: getSessionData('aprId'),
+      userRole: user.userRole,
+      userEmail: user.email,
+      signatureData: signature
+    }
+  
+    const response = await fetch('https://demo-eldorado.loca.lt/apr', {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'Bypass-Tunnel-Reminder': 'Hi tunnel'
+      }
+    })
+    if (response.status === 201) {
+      router.push({ name: 'home-view' })
+    }
+    awaitingResponse.value = true
+  }
+}
+const submitBasedOnEmitente = () => {
+  if (getSessionData('isEmitente')) emitirApr()
+  else if (!getSessionData('aprApproved')) assinarApr()
+  else router.push({ name: 'home-view' })
 }
 
 const route = useRoute()
@@ -287,7 +325,13 @@ onMounted(async () => {
     fetchedApr.value = { form: apr.formulario, id: apr.id}
     fetchedAssinaturasResponsaveis.value = apr.assinaturas
     setSessionData('aprForm', fetchedApr.value.form)
-    setSessionData('assinaturaResponsavel', fetchedAssinaturasResponsaveis.value)
+    setSessionData('aprId', fetchedApr.value.id)
+    setSessionData('assinaturasResponsaveis', fetchedAssinaturasResponsaveis.value)
+    let aprApproved = true
+    for (const signature of fetchedAssinaturasResponsaveis.value) {
+      if (!signature.signatureData) aprApproved = false
+    }
+    if (aprApproved) setSessionData('aprApproved', true)
   }
   page.value = 0
 })

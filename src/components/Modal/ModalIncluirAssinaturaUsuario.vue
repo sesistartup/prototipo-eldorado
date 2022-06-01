@@ -22,10 +22,9 @@
 <script setup>
 import BlackoutBg from '../GraphicUtils/BlackoutBg.vue';
 import { ref } from 'vue'
-// eslint-disable-next-line no-undef
+
 const emit = defineEmits('hidding', 'include')
 
-// eslint-disable-next-line no-undef
 const props = defineProps({
   isVisible: Boolean
 })
