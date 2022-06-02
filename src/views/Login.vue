@@ -116,23 +116,27 @@ export default {
     },
     async logUserIn(email, pass) {
       this.templateControllers.isAwaitingLoginResponse = true
-      const registration = await navigator.serviceWorker.getRegistration("service-worker.js");
-      if (registration) {
-        const subscription = await registration.pushManager.getSubscription();
-        const login = {
-          email: email,
-          pass: pass,
-          subscription: subscription
-        };
-        await this.handleLoginRequest(login);
-      }
-      else {
-        const login = {
-          email: email,
-          pass: pass,
-          subscription: await this.subscribeNotification()
-        };
-        await this.handleLoginRequest(login);
+      try {
+        const registration = await navigator.serviceWorker.getRegistration("service-worker.js");
+        if (registration) {
+          const subscription = await registration.pushManager.getSubscription();
+          const login = {
+            email: email,
+            pass: pass,
+            subscription: subscription
+          };
+          await this.handleLoginRequest(login);
+        }
+        else {
+          const login = {
+            email: email,
+            pass: pass,
+            subscription: await this.subscribeNotification()
+          };
+          await this.handleLoginRequest(login);
+        }
+      } catch (error) {
+        alert(error)
       }
       this.templateControllers.isAwaitingLoginResponse = false
     },
