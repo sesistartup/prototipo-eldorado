@@ -5,14 +5,14 @@ module.exports = {
     workboxOptions: {
       swSrc: "./src/service-worker.js"
     },
-    // iconPaths: {
-    //   faviconSVG: 'img/icons/eldorado-icon-96.svg',
-    //   favicon32: 'img/icons/eldorado-icon-32.png',
-    //   favicon16: 'img/icons/eldorado-icon-16.png',
-    //   appleTouchIcon: 'img/icons/eldorado-icon.png',
-    //   maskIcon: 'img/icons/eldorado-icon.png',
-    //   msTileImage: 'img/icons/eldorado-icon.png'
-    // },
+    iconPaths: {
+      faviconSVG: 'img/icons/eldorado-icon-96.svg',
+      favicon32: 'img/icons/eldorado-icon-32.png',
+      favicon16: 'img/icons/eldorado-icon-16.png',
+      appleTouchIcon: 'img/icons/eldorado-icon.png',
+      maskIcon: 'img/icons/eldorado-icon.png',
+      msTileImage: 'img/icons/eldorado-icon.png'
+    },
     manifestOptions: {
       icons: [
         {
