@@ -71,24 +71,24 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 /* width */
-/* ::-webkit-scrollbar {
-  width: 8px;
-} */
+::-webkit-scrollbar {
+  width: 4px;
+}
 
 /* Track */
-/* ::-webkit-scrollbar-track { */
-  /* border-radius: 25px;
-  background: #f1f1f1; */
-/* } */
+::-webkit-scrollbar-track {
+  border-radius: 25px;
+  background: #f1f1f1;
+}
 
 /* Handle */
-/* ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 25px; */
-/* } */
+  border-radius: 25px;
+}
 
 /* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background: #555; */
-/* } */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 </style>

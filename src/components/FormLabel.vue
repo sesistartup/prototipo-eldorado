@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#FAE84E] text-[#183723] h-14 w-5/6 max-w-sm rounded-xl drop-shadow-xl font-semibold text-left px-4 leading-[3.5rem]">
+  <div class="bg-[#FAE84E] text-[#183723] h-14 w-full max-w-sm rounded-xl drop-shadow-xl font-semibold text-left px-4 leading-[3.5rem]">
     {{ title }}
     <slot />
   </div>

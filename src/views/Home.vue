@@ -13,7 +13,7 @@
       <button class="w-[150px] h-[150px] open-pt-form open-forms opacity-60" />
     </div>
     <div class="hidden drop-shadow-lg h-[2px] w-full bg-white sm:block rounded-xl" />
-    <ContainerDeAPRs />
+    <ContainerDeAPRs class="h-4/6" />
     <!-- <button class="std-button button-positive-action mt-4" @click="$router.push({ name: 'apr', query: { isVisualizing: false }})">Emitir APR</button> -->
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full max-w-6xl flex flex-col items-center justify-center">
-    <div v-if="page < 12" class="sm:w-5/6 w-full flex justify-center sm:justify-start">
+    <div v-if="page < 12" class="sm:w-5/6 w-full flex justify-center">
       <FormLabel
         :title="formTitleIndexes[page]"
         class="mt-14 mb-4"

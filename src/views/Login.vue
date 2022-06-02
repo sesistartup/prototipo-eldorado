@@ -67,30 +67,6 @@ export default {
       });
       return subscription;
     },
-    async postSubscribe() {
-      const registration = await navigator.serviceWorker.getRegistration("service-worker.js");
-      if (registration) {
-        const subscription = await registration.pushManager.getSubscription();
-        await fetch("https://demo-eldorado.loca.lt/apr", {
-          method: "POST",
-          body: JSON.stringify(subscription),
-          headers: {
-            "Content-Type": "application/json",
-            "Bypass-Tunnel-Reminder": "Hi tunnel"
-          },
-        });
-      }
-      else {
-        await fetch("https://demo-eldorado.loca.lt/apr", {
-          method: "POST",
-          body: JSON.stringify(await this.subscribeNotification()),
-          headers: {
-            "Content-Type": "application/json",
-            "Bypass-Tunnel-Reminder": "Hi tunnel"
-          },
-        });
-      }
-    },
     async handleLoginRequest(body) {
       try {
         const response = await fetch("https://demo-eldorado.loca.lt/user/login", {
@@ -116,7 +92,6 @@ export default {
     },
     async logUserIn(email, pass) {
       this.templateControllers.isAwaitingLoginResponse = true
-      try {
         const registration = await navigator.serviceWorker.getRegistration("service-worker.js");
         if (registration) {
           const subscription = await registration.pushManager.getSubscription();
@@ -126,8 +101,7 @@ export default {
             subscription: subscription
           };
           await this.handleLoginRequest(login);
-        }
-        else {
+        } else {
           const login = {
             email: email,
             pass: pass,
@@ -135,9 +109,6 @@ export default {
           };
           await this.handleLoginRequest(login);
         }
-      } catch (error) {
-        alert(error)
-      }
       this.templateControllers.isAwaitingLoginResponse = false
     },
     urlBase64ToUint8Array(base64String) {
