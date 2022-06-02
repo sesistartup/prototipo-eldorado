@@ -18,9 +18,10 @@ self.addEventListener('activate', () => {
 
 self.addEventListener('push', event => {
   const data = event.data.json();
-  console.log(data)
   self.registration.showNotification(data.title, {
+    badge: '../public/eldorado-icon-96.png',
+    icon: '../public/eldorado-icon.png',
     body: 'Verifique a APR',
-    vibrate: [200, 100, 200]
+    vibrate: [400, 100, 400]
   });
 });
