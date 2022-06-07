@@ -5,8 +5,6 @@
   />
   <div class="flex flex-wrap bg-transparent justify-center sm:justify-start mt-2 overflow-auto rounded-md p-4 drop-shadow-lg">
     <button v-for="(apr, index) in aprsArray" :key="index" class="button-neutral-action bg-white m-2 w-28 h-32 border-2 border-gray-300" @click="visualizeApr(apr)">APR Nº <br/>{{ aprName(apr) }}</button>
-    <button v-for="(apr, index) in aprsArray" :key="index" class="button-neutral-action bg-white m-2 w-28 h-32 border-2 border-gray-300" @click="visualizeApr(apr)">APR Nº <br/>{{ aprName(apr) }}</button>
-    <button v-for="(apr, index) in aprsArray" :key="index" class="button-neutral-action bg-white m-2 w-28 h-32 border-2 border-gray-300" @click="visualizeApr(apr)">APR Nº <br/>{{ aprName(apr) }}</button>
   </div>
 </div>
 </template>
